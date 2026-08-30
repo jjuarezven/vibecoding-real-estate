@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -25,6 +25,7 @@ export default function RootLayout({
       </head>
       <body
         className="bg-background-light text-nordic-dark font-display antialiased selection:bg-mosque selection:text-white"
+        suppressHydrationWarning
       >
         {children}
       </body>
