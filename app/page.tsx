@@ -2,9 +2,39 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import FeaturedCard from "@/components/FeaturedCard";
 import PropertyCard from "@/components/PropertyCard";
-import { featuredProperties, newMarketProperties } from "@/data/mockProperties";
+import Pagination from "@/components/Pagination";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Home() {
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export default async function Home({ searchParams }: Props) {
+  const sp = await searchParams;
+  const page = typeof sp?.page === "string" ? parseInt(sp.page, 10) : 1;
+  const ITEMS_PER_PAGE = 10;
+
+  const from = (page - 1) * ITEMS_PER_PAGE;
+  const to = from + ITEMS_PER_PAGE - 1;
+
+  const supabase = await createClient();
+
+  // Fetch featured properties
+  const { data: featuredProperties } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("is_featured", true);
+
+  // Fetch new market properties with pagination
+  const { data: newMarketProperties, count } = await supabase
+    .from("properties")
+    .select("*", { count: "exact" })
+    .eq("is_featured", false)
+    .range(from, to)
+    .order("id", { ascending: true }); // ordering by id as a fallback
+
+  const totalPages = Math.ceil((count || 0) / ITEMS_PER_PAGE);
+
   return (
     <>
       <Navbar />
@@ -29,7 +59,7 @@ export default function Home() {
             </a>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {featuredProperties.map((property) => (
+            {featuredProperties?.map((property) => (
               <FeaturedCard key={property.id} property={property} />
             ))}
           </div>
@@ -58,9 +88,7 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {newMarketProperties.map((property, idx) => {
-              // The original HTML had some classes conditionally applied based on index to hide them on smaller screens
-              // We'll mimic that to match the HTML structure perfectly.
+            {newMarketProperties?.map((property, idx) => {
               let className = "";
               if (idx === 4) className = "hidden xl:flex";
               if (idx === 5) className = "hidden lg:flex";
@@ -74,11 +102,8 @@ export default function Home() {
               );
             })}
           </div>
-          <div className="mt-12 text-center">
-            <button className="px-8 py-3 bg-white border border-nordic-dark/10 hover:border-mosque hover:text-mosque text-nordic-dark font-medium rounded-lg transition-all hover:shadow-md">
-              Load more properties
-            </button>
-          </div>
+          
+          <Pagination currentPage={page} totalPages={totalPages} />
         </section>
       </main>
     </>
