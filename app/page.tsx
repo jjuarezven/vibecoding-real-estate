@@ -23,7 +23,8 @@ export default async function Home({ searchParams }: Props) {
   const { data: featuredProperties } = await supabase
     .from("properties")
     .select("*")
-    .eq("is_featured", true);
+    .eq("is_featured", true)
+    .limit(4);
 
   // Fetch new market properties with pagination
   const { data: newMarketProperties, count } = await supabase
