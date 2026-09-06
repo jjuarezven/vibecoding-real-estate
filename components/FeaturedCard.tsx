@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Property } from "../data/mockProperties";
 
 interface FeaturedCardProps {
@@ -6,13 +7,14 @@ interface FeaturedCardProps {
 
 export default function FeaturedCard({ property }: FeaturedCardProps) {
   return (
-    <div className="group relative rounded-xl overflow-hidden shadow-soft bg-white cursor-pointer">
-      <div className="aspect-[4/3] w-full overflow-hidden relative">
-        <img
-          alt={property.imageAlt}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          src={property.imageUrl}
-        />
+    <Link href={`/propiedades/${property.slug}`} className="block group">
+      <div className="relative rounded-xl overflow-hidden shadow-soft bg-white">
+        <div className="aspect-[4/3] w-full overflow-hidden relative">
+          <img
+            alt={property.images[0].alt}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            src={property.images[0].url}
+          />
         {property.badge && (
           <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-nordic-dark">
             {property.badge}
@@ -52,7 +54,8 @@ export default function FeaturedCard({ property }: FeaturedCardProps) {
             {property.area.toLocaleString()} m²
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

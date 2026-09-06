@@ -7,8 +7,10 @@ export interface Property {
   beds: number;
   baths: number;
   area: number;
-  imageUrl: string;
-  imageAlt: string;
+  images: { url: string; alt: string }[];
+  slug: string;
+  lat: number;
+  lng: number;
   badge?: string;
 }
 
@@ -22,8 +24,14 @@ export const featuredProperties: Property[] = [
     beds: 5,
     baths: 4.5,
     area: 4200,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCra-FKp81t0_OM8bWD55m2o9OOSnR_v7D0UilyExMImxyIcr9tIMZ2Py3HcC0ra_MtSsBkduMcwxUNKI9_iSXFFr_YRON1SF9hNM3fcYy-uG7N7uusL0Z367WINi1V7_GwfNQx-gsbUqLtzVi4ivFyqFQGb4qBs79bALeSFb6i3_ZnJnI1VVrN-VeZYHjfYyQI5C6zy90N3uxWZpwzIBhNoUDKKQjQ8EOEYPoyPTzhnh6b6AS3dkkFJ8t4xSDC6qjhMrQUoUPnAeM",
-    imageAlt: "Luxury modern villa exterior with pool",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCra-FKp81t0_OM8bWD55m2o9OOSnR_v7D0UilyExMImxyIcr9tIMZ2Py3HcC0ra_MtSsBkduMcwxUNKI9_iSXFFr_YRON1SF9hNM3fcYy-uG7N7uusL0Z367WINi1V7_GwfNQx-gsbUqLtzVi4ivFyqFQGb4qBs79bALeSFb6i3_ZnJnI1VVrN-VeZYHjfYyQI5C6zy90N3uxWZpwzIBhNoUDKKQjQ8EOEYPoyPTzhnh6b6AS3dkkFJ8t4xSDC6qjhMrQUoUPnAeM", alt: "Luxury modern villa exterior with pool" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "the-glass-pavilion",
+  lat: 40.2048,
+  lng: -96.5239,
     badge: "Exclusive",
   },
   {
@@ -35,8 +43,14 @@ export const featuredProperties: Property[] = [
     beds: 3,
     baths: 3,
     area: 2100,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDurAGHzg_fpQxFal-obkFVy1Q3WLPdueAQpz0itcQiRV-WfvulnBEDJbNeV8J06q4mX7PTtXYVJjX4-mHVr_khZLZxQ_s8f6fruGqzeqALyMu8wEHRK1EsOs9f4_jPmS7FxcdzrDkR88Wz0GjaPLXkTZRoJQfur59rxYRLi-WYcW-VU_gKS39CPLOMlftvqGvW0IOk5tXgst5mJ4WQM-ICN4vkdel9ido9YFUQga0OI10i6NSe5W4owt33-2YRi_b_ltdZW2QZC5s",
-    imageAlt: "Modern interior living room with view",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDurAGHzg_fpQxFal-obkFVy1Q3WLPdueAQpz0itcQiRV-WfvulnBEDJbNeV8J06q4mX7PTtXYVJjX4-mHVr_khZLZxQ_s8f6fruGqzeqALyMu8wEHRK1EsOs9f4_jPmS7FxcdzrDkR88Wz0GjaPLXkTZRoJQfur59rxYRLi-WYcW-VU_gKS39CPLOMlftvqGvW0IOk5tXgst5mJ4WQM-ICN4vkdel9ido9YFUQga0OI10i6NSe5W4owt33-2YRi_b_ltdZW2QZC5s", alt: "Modern interior living room with view" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "azure-heights-penthouse",
+  lat: 44.7133,
+  lng: -77.6869,
     badge: "New Arrival",
   },
   {
@@ -48,8 +62,14 @@ export const featuredProperties: Property[] = [
     beds: 6,
     baths: 6.5,
     area: 5500,
-    imageUrl: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Luxury Malibu beach villa",
+    images: [
+    { url: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80", alt: "Luxury Malibu beach villa" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "serene-oasis-estate",
+  lat: 37.5537,
+  lng: -77.7644,
     badge: "Exclusive",
   },
   {
@@ -61,8 +81,14 @@ export const featuredProperties: Property[] = [
     beds: 4,
     baths: 4,
     area: 3200,
-    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Modern black Scandinavian villa",
+    images: [
+    { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80", alt: "Modern black Scandinavian villa" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "the-obsidian-villa",
+  lat: 42.8996,
+  lng: -76.6634,
     badge: "Design Award",
   }
 ];
@@ -77,8 +103,14 @@ export const newMarketProperties: Property[] = [
     beds: 3,
     baths: 2,
     area: 120,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDuQ9M7U6euA6_cXmYuXnej-N5IuawAW8ds-4G1mzfqmiBc13qXsPhf9_j_zTB8gfEunrBHo8xMsxYwCw_pl8fsxbxRkmyvLR1N9Tiye5ZJG7fwlLn9MwyBanXYhE0emGwp59es1FEyQTRQbmXLUKO74Yj34ZHqrqIkOtMKhP8CmRFvfoHT5LAe10105vUhKNkxIBvtt530nfLigSUTemOOcJMVNmsgactntRJUwOBU_TZzND7BYtDklr8uZcNYlQOK5U74-ufIf-E",
-    imageAlt: "Modern white house facade",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDuQ9M7U6euA6_cXmYuXnej-N5IuawAW8ds-4G1mzfqmiBc13qXsPhf9_j_zTB8gfEunrBHo8xMsxYwCw_pl8fsxbxRkmyvLR1N9Tiye5ZJG7fwlLn9MwyBanXYhE0emGwp59es1FEyQTRQbmXLUKO74Yj34ZHqrqIkOtMKhP8CmRFvfoHT5LAe10105vUhKNkxIBvtt530nfLigSUTemOOcJMVNmsgactntRJUwOBU_TZzND7BYtDklr8uZcNYlQOK5U74-ufIf-E", alt: "Modern white house facade" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "modern-family-home",
+  lat: 45.5992,
+  lng: -118.114,
   },
   {
     id: "n2",
@@ -89,8 +121,14 @@ export const newMarketProperties: Property[] = [
     beds: 1,
     baths: 1,
     area: 85,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuB4zNatD3vePhIZAi6OHHJKmamYSgeBNSKjEt32tvkkf4s6aBXCF8R4LNfDfPa9leA0t6N1OKOcP358WwZrnosbCBxSM7EaY2_P7qkx3MinRgmHQn7RvleNTwy8cLigMoR3iv0u83chBVbZYI6BcNMcqv80W-l1pIUgIWZcDIXEqtUatrsojSGfM0lTNDZpkBntBUkRY6NB4ZUymYNYvTHXKbO8NZ6N6uoyuuHqcaRWKzHCNXkOR3p-_EVFAHR8QwijIY_m1mefPZ4",
-    imageAlt: "Stylish apartment living room",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuB4zNatD3vePhIZAi6OHHJKmamYSgeBNSKjEt32tvkkf4s6aBXCF8R4LNfDfPa9leA0t6N1OKOcP358WwZrnosbCBxSM7EaY2_P7qkx3MinRgmHQn7RvleNTwy8cLigMoR3iv0u83chBVbZYI6BcNMcqv80W-l1pIUgIWZcDIXEqtUatrsojSGfM0lTNDZpkBntBUkRY6NB4ZUymYNYvTHXKbO8NZ6N6uoyuuHqcaRWKzHCNXkOR3p-_EVFAHR8QwijIY_m1mefPZ4", alt: "Stylish apartment living room" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "urban-loft",
+  lat: 31.3203,
+  lng: -98.6756,
   },
   {
     id: "n3",
@@ -101,8 +139,14 @@ export const newMarketProperties: Property[] = [
     beds: 2,
     baths: 2,
     area: 98,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuARQWC19e7mleUpjb8CWLztEv_svJeRFOaC2i-9r9GctFuX5Barzhfai9wNM1WW8bcGlqdFM32d3KPf7SItom5ijdHOz5rGGQPeT7PlWs8-y9LkfcsHLQqsLxalhxP94XJo76_mAMp7T2dVj3hPKHNzTDLLiS6ujSdSsyo3onxQthp4ZkVE8op92gyTLUUucaGaxO8vJvyhH3HuWB07EPqT1WsW0lr9Of5lUPonjG9eiqE1XiJXTqzXUZQt5JorfPwCO1MioZA_Zro",
-    imageAlt: "Cabin in the woods exterior",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuARQWC19e7mleUpjb8CWLztEv_svJeRFOaC2i-9r9GctFuX5Barzhfai9wNM1WW8bcGlqdFM32d3KPf7SItom5ijdHOz5rGGQPeT7PlWs8-y9LkfcsHLQqsLxalhxP94XJo76_mAMp7T2dVj3hPKHNzTDLLiS6ujSdSsyo3onxQthp4ZkVE8op92gyTLUUucaGaxO8vJvyhH3HuWB07EPqT1WsW0lr9Of5lUPonjG9eiqE1XiJXTqzXUZQt5JorfPwCO1MioZA_Zro", alt: "Cabin in the woods exterior" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "highland-retreat",
+  lat: 35.242,
+  lng: -100.3743,
   },
   {
     id: "n4",
@@ -113,8 +157,14 @@ export const newMarketProperties: Property[] = [
     beds: 3,
     baths: 3,
     area: 180,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBGq4Phm0uDzCnjHAsnWpYTBVpOds_M6iOsJuRQQA5eUZHkztGgtc7eh_OE6wBeyW1-iZh7yyhROnvvmqkAZ9tyAWFGXk0FG52zU4kZ_EDLA0U0cRszy7byNXTeWe0_hS53SYmtCTEV8Y1AM-WxiIC38UMa15QwFDjXtCGQOxoh35K0Ol_70vfsxm0VqDbaWkr8tcEbLTLy0NXH_GcpGK4lAXizgxYOIlFWGyau-4OIfPZRpjCBDbz_qu3VlN201UUJGiuM9ajVd-U",
-    imageAlt: "Bright bedroom with large window",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBGq4Phm0uDzCnjHAsnWpYTBVpOds_M6iOsJuRQQA5eUZHkztGgtc7eh_OE6wBeyW1-iZh7yyhROnvvmqkAZ9tyAWFGXk0FG52zU4kZ_EDLA0U0cRszy7byNXTeWe0_hS53SYmtCTEV8Y1AM-WxiIC38UMa15QwFDjXtCGQOxoh35K0Ol_70vfsxm0VqDbaWkr8tcEbLTLy0NXH_GcpGK4lAXizgxYOIlFWGyau-4OIfPZRpjCBDbz_qu3VlN201UUJGiuM9ajVd-U", alt: "Bright bedroom with large window" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "sea-view-penthouse",
+  lat: 36.5911,
+  lng: -109.7741,
   },
   {
     id: "n5",
@@ -125,8 +175,14 @@ export const newMarketProperties: Property[] = [
     beds: 1,
     baths: 1,
     area: 50,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA1w-Hb1289NqZKon3VK8bpmMiCDYYiAMT5egzTINo9m9wSZRHv-k-1IGTVoL1NT8YeZXJHa87JPNDIPrtrbP7jChHq0ypXF90uByhC6VA9O788_B4FY8JVg4chbWN9bcrn9-9FvVvfZX8Aj60Iqg_C8CsCA9DEnJqi2rJvzmK5UP5z-9XRTRjBneAPCa8iGgGWBD9yYKsziN6vn0ePBDGo3inieQtmbr46W31p6UfQ649XRxTm7ygOY2J-jxW1r0qWs8i97KGpkTE",
-    imageAlt: "Cozy apartment interior",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuA1w-Hb1289NqZKon3VK8bpmMiCDYYiAMT5egzTINo9m9wSZRHv-k-1IGTVoL1NT8YeZXJHa87JPNDIPrtrbP7jChHq0ypXF90uByhC6VA9O788_B4FY8JVg4chbWN9bcrn9-9FvVvfZX8Aj60Iqg_C8CsCA9DEnJqi2rJvzmK5UP5z-9XRTRjBneAPCa8iGgGWBD9yYKsziN6vn0ePBDGo3inieQtmbr46W31p6UfQ649XRxTm7ygOY2J-jxW1r0qWs8i97KGpkTE", alt: "Cozy apartment interior" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "central-studio",
+  lat: 39.3464,
+  lng: -97.5726,
   },
   {
     id: "n6",
@@ -137,8 +193,14 @@ export const newMarketProperties: Property[] = [
     beds: 2,
     baths: 2,
     area: 110,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfGXdY0g51ojSg0GMeTW9ndLY3mpKK3oMtWxo2nwd_dwi1pgn1Boi_ovaDGIFhUA7nwu3WdBch8ZuHxoHu3QfgM5ceAsp8pglRVyCROWNcy9zeDNP2wqLoevyKGcaEyFYHYpIx2KK46nLWthnHiHugmkKw48kJsL8IjMO1bL3T1Zwt8bvQDTTUHTgB3GqZ2RU2asRzF1jVg0rLw3LWXXTq0YF1CsbhlWpYOuCEpH5bB8zkBlbKXR4At_M46AL8rJqn5c6BrPD5PP8",
-    imageAlt: "Modern minimalist home exterior",
+    images: [
+    { url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfGXdY0g51ojSg0GMeTW9ndLY3mpKK3oMtWxo2nwd_dwi1pgn1Boi_ovaDGIFhUA7nwu3WdBch8ZuHxoHu3QfgM5ceAsp8pglRVyCROWNcy9zeDNP2wqLoevyKGcaEyFYHYpIx2KK46nLWthnHiHugmkKw48kJsL8IjMO1bL3T1Zwt8bvQDTTUHTgB3GqZ2RU2asRzF1jVg0rLw3LWXXTq0YF1CsbhlWpYOuCEpH5bB8zkBlbKXR4At_M46AL8rJqn5c6BrPD5PP8", alt: "Modern minimalist home exterior" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "garden-villa",
+  lat: 46.0342,
+  lng: -115.1847,
   },
   {
     id: "n7",
@@ -149,8 +211,14 @@ export const newMarketProperties: Property[] = [
     beds: 2,
     baths: 1.5,
     area: 105,
-    imageUrl: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Wood cabin in snowy landscape",
+    images: [
+    { url: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80", alt: "Wood cabin in snowy landscape" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "scandinavian-cabin",
+  lat: 30.5782,
+  lng: -112.4355,
   },
   {
     id: "n8",
@@ -161,8 +229,14 @@ export const newMarketProperties: Property[] = [
     beds: 4,
     baths: 3,
     area: 220,
-    imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Mid-century modern house with pool",
+    images: [
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Mid-century modern house with pool" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "mid-century-residence",
+  lat: 31.0683,
+  lng: -81.4506,
   },
   {
     id: "n9",
@@ -173,8 +247,14 @@ export const newMarketProperties: Property[] = [
     beds: 1,
     baths: 1,
     area: 78,
-    imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Brooklyn brick loft interior",
+    images: [
+    { url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80", alt: "Brooklyn brick loft interior" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "industrial-loft-studio",
+  lat: 35.2456,
+  lng: -92.7821,
   },
   {
     id: "n10",
@@ -185,8 +265,14 @@ export const newMarketProperties: Property[] = [
     beds: 4,
     baths: 4.5,
     area: 310,
-    imageUrl: "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Lakefront villa with deck",
+    images: [
+    { url: "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=800&q=80", alt: "Lakefront villa with deck" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "contemporary-lake-house",
+  lat: 38.7185,
+  lng: -115.1124,
   },
   {
     id: "n11",
@@ -197,8 +283,14 @@ export const newMarketProperties: Property[] = [
     beds: 2,
     baths: 2,
     area: 90,
-    imageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Ibiza apartment balcony view",
+    images: [
+    { url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80", alt: "Ibiza apartment balcony view" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "boho-chic-apartment",
+  lat: 45.8479,
+  lng: -110.1863,
   },
   {
     id: "n12",
@@ -209,8 +301,14 @@ export const newMarketProperties: Property[] = [
     beds: 3,
     baths: 2,
     area: 135,
-    imageUrl: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Traditional Japanese townhouse interior",
+    images: [
+    { url: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80", alt: "Traditional Japanese townhouse interior" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "kyoto-townhouse",
+  lat: 46.9216,
+  lng: -71.5931,
   },
   {
     id: "n13",
@@ -221,8 +319,14 @@ export const newMarketProperties: Property[] = [
     beds: 2,
     baths: 2.5,
     area: 140,
-    imageUrl: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Stunning penthouse bedroom with glass walls",
+    images: [
+    { url: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80", alt: "Stunning penthouse bedroom with glass walls" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "skyline-penthouse-suite",
+  lat: 39.7684,
+  lng: -105.6131,
   },
   {
     id: "n14",
@@ -233,7 +337,13 @@ export const newMarketProperties: Property[] = [
     beds: 5,
     baths: 5,
     area: 450,
-    imageUrl: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Rustic Italian villa facade",
+    images: [
+    { url: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80", alt: "Rustic Italian villa facade" },
+    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Extra 1" },
+    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
+  ],
+  slug: "tuscan-stone-villa",
+  lat: 49.4691,
+  lng: -104.3572,
   }
 ];
