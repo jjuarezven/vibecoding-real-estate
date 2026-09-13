@@ -1,0 +1,116 @@
+{
+  "navbar": {
+    "brand": "LuxeEstate",
+    "buy": "Buy",
+    "rent": "Rent",
+    "sell": "Sell",
+    "savedHomes": "Saved Homes",
+    "search": "Search",
+    "notifications": "Notifications",
+    "profile": "Profile"
+  },
+  "hero": {
+    "titlePrefix": "Find your",
+    "titleHighlight": "sanctuary",
+    "searchPlaceholder": "Search by city, neighborhood, or address...",
+    "searchButton": "Search",
+    "categories": {
+      "all": "All",
+      "house": "House",
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "penthouse": "Penthouse"
+    },
+    "filters": "Filters"
+  },
+  "home": {
+    "featuredTitle": "Featured Collections",
+    "featuredSubtitle": "Curated properties for the discerning eye.",
+    "viewAll": "View all",
+    "newInMarket": "New in Market",
+    "searchResults": "Search & Filter Results",
+    "freshOpportunities": "Fresh opportunities added this week.",
+    "showingResults": "Showing {count} {plural} matching your criteria.",
+    "propertySingular": "property",
+    "propertyPlural": "properties",
+    "tabAll": "All",
+    "tabBuy": "Buy",
+    "tabRent": "Rent",
+    "reset": "Reset",
+    "noPropertiesTitle": "No properties found",
+    "noPropertiesDesc": "We couldn't find any properties matching your current search and filter combination.",
+    "clearAllFilters": "Clear all filters"
+  },
+  "badges": {
+    "exclusive": "Exclusive",
+    "newArrival": "New Arrival",
+    "designAward": "Design Award"
+  },
+  "gallery": {
+    "photos": "{count} photos",
+    "seeMore": "+{count} more"
+  },
+  "propertyCard": {
+    "forRent": "FOR RENT",
+    "forSale": "FOR SALE",
+    "perMonth": "/mo",
+    "beds": "Beds",
+    "baths": "Baths",
+    "areaUnit": "m²"
+  },
+  "propertyDetail": {
+    "forRent": "FOR RENT",
+    "forSale": "FOR SALE",
+    "perMonth": "/mo",
+    "beds": "Beds",
+    "baths": "Baths",
+    "areaUnit": "m²",
+    "aboutProperty": "About this property",
+    "aboutDescription": "Experience unparalleled luxury in this stunning {type} property. Located in the prestigious {location}, this home features {beds} bedrooms and {baths} bathrooms across {area} square meters of beautifully designed living space. High-end finishes, an open floor plan, and ample natural light make this {kind} a true sanctuary.",
+    "apartment": "apartment",
+    "house": "house",
+    "location": "Location",
+    "mapAttribution": "Map data © OpenStreetMap contributors",
+    "interestedTitle": "Interested in this property?",
+    "interestedSubtitle": "Contact our premium agents to schedule a private viewing.",
+    "scheduleTour": "Schedule a Tour",
+    "contactAgent": "Contact Agent",
+    "agentRole": "Senior Luxury Agent"
+  },
+  "filtersModal": {
+    "title": "Filters",
+    "close": "Close filters",
+    "location": "Location",
+    "locationPlaceholder": "City, neighborhood, or address",
+    "priceRange": "Price Range",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "propertyType": "Property Type",
+    "anyType": "Any Type",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "any": "Any",
+    "amenities": "Amenities",
+    "swimmingPool": "Swimming Pool",
+    "gym": "Gym",
+    "parking": "Parking",
+    "airConditioning": "Air Conditioning",
+    "wifi": "High-speed Wifi",
+    "patioTerrace": "Patio / Terrace",
+    "clear": "Clear",
+    "apply": "Apply Filters",
+    "matchingProperties": "matching properties",
+    "searching": "Searching..."
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {current} of {total}"
+  },
+  "language": {
+    "select": "Language",
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "navbar": {
+    "brand": "LuxeEstate",
+    "buy": "Comprar",
+    "rent": "Alquilar",
+    "sell": "Vender",
+    "savedHomes": "Guardados",
+    "search": "Buscar",
+    "notifications": "Notificaciones",
+    "profile": "Perfil"
+  },
+  "hero": {
+    "titlePrefix": "Encuentra tu",
+    "titleHighlight": "santuario",
+    "searchPlaceholder": "Buscar por ciudad, vecindario o dirección...",
+    "searchButton": "Buscar",
+    "categories": {
+      "all": "Todos",
+      "house": "Casa",
+      "apartment": "Apartamento",
+      "villa": "Villa",
+      "penthouse": "Ático"
+    },
+    "filters": "Filtros"
+  },
+  "home": {
+    "featuredTitle": "Colecciones Destacadas",
+    "featuredSubtitle": "Propiedades seleccionadas para el ojo más exigente.",
+    "viewAll": "Ver todas",
+    "newInMarket": "Nuevas en el mercado",
+    "searchResults": "Resultados de búsqueda y filtros",
+    "freshOpportunities": "Nuevas oportunidades añadidas esta semana.",
+    "showingResults": "Mostrando {count} {plural} que coinciden con tus criterios.",
+    "propertySingular": "propiedad",
+    "propertyPlural": "propiedades",
+    "tabAll": "Todas",
+    "tabBuy": "Comprar",
+    "tabRent": "Alquilar",
+    "reset": "Restablecer",
+    "noPropertiesTitle": "No se encontraron propiedades",
+    "noPropertiesDesc": "No pudimos encontrar propiedades que coincidan con tu búsqueda y filtros actuales.",
+    "clearAllFilters": "Borrar todos los filtros"
+  },
+  "badges": {
+    "exclusive": "Exclusiva",
+    "newArrival": "Novedad",
+    "designAward": "Premio de diseño"
+  },
+  "gallery": {
+    "photos": "{count} fotos",
+    "seeMore": "+{count} más"
+  },
+  "propertyCard": {
+    "forRent": "EN ALQUILER",
+    "forSale": "EN VENTA",
+    "perMonth": "/mes",
+    "beds": "Habitaciones",
+    "baths": "Baños",
+    "areaUnit": "m²"
+  },
+  "propertyDetail": {
+    "forRent": "EN ALQUILER",
+    "forSale": "EN VENTA",
+    "perMonth": "/mes",
+    "beds": "Habitaciones",
+    "baths": "Baños",
+    "areaUnit": "m²",
+    "aboutProperty": "Acerca de esta propiedad",
+    "aboutDescription": "Experimenta un lujo sin igual en esta impresionante propiedad en {type}. Ubicada en la prestigiosa zona de {location}, esta residencia cuenta con {beds} habitaciones y {baths} baños en {area} metros cuadrados de espacio diseñado con el más alto nivel. Acabados premium, diseño abierto y abundante luz natural hacen de este {kind} un verdadero santuario.",
+    "apartment": "apartamento",
+    "house": "casa",
+    "location": "Ubicación",
+    "mapAttribution": "Datos del mapa © Colaboradores de OpenStreetMap",
+    "interestedTitle": "¿Interesado en esta propiedad?",
+    "interestedSubtitle": "Contacta con nuestros asesores prémium para coordinar una visita privada.",
+    "scheduleTour": "Agendar visita",
+    "contactAgent": "Contactar asesor",
+    "agentRole": "Asesora senior de lujo"
+  },
+  "filtersModal": {
+    "title": "Filtros",
+    "close": "Cerrar filtros",
+    "location": "Ubicación",
+    "locationPlaceholder": "Ciudad, vecindario o dirección",
+    "priceRange": "Rango de precios",
+    "minPrice": "Precio mínimo",
+    "maxPrice": "Precio máximo",
+    "propertyType": "Tipo de propiedad",
+    "anyType": "Cualquier tipo",
+    "bedrooms": "Habitaciones",
+    "bathrooms": "Baños",
+    "any": "Cualquiera",
+    "amenities": "Servicios",
+    "swimmingPool": "Piscina",
+    "gym": "Gimnasio",
+    "parking": "Estacionamiento",
+    "airConditioning": "Aire acondicionado",
+    "wifi": "Wifi de alta velocidad",
+    "patioTerrace": "Patio / Terraza",
+    "clear": "Limpiar",
+    "apply": "Aplicar filtros",
+    "matchingProperties": "propiedades coincidentes",
+    "searching": "Buscando..."
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "pageOf": "Página {current} de {total}"
+  },
+  "language": {
+    "select": "Idioma",
+    "en": "Inglés",
+    "es": "Español",
+    "fr": "Francés"
+  }
+}

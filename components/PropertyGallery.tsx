@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "@/context/LanguageContext";
 
 interface Image {
   url: string;
@@ -13,6 +14,7 @@ interface PropertyGalleryProps {
 
 export default function PropertyGallery({ images }: PropertyGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { t } = useTranslation();
 
   if (!images || images.length === 0) return null;
 
@@ -30,7 +32,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
         />
         <div className="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
           <span className="material-icons text-sm">photo_library</span>
-          {images.length} photos
+          {t("gallery.photos", { count: images.length })}
         </div>
       </div>
 
@@ -60,7 +62,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
             {isLast && (
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                 <span className="text-white font-semibold text-sm">
-                  +{images.length - 5} more
+                  {t("gallery.seeMore", { count: images.length - 5 })}
                 </span>
               </div>
             )}

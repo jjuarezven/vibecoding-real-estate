@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Home Discover Screen - Premium Real Estate",
@@ -12,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -27,7 +28,9 @@ export default function RootLayout({
         className="bg-background-light text-nordic-dark font-display antialiased selection:bg-mosque selection:text-white"
         suppressHydrationWarning
       >
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
