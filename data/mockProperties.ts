@@ -12,6 +12,8 @@ export interface Property {
   lat: number;
   lng: number;
   badge?: string;
+  amenities?: string[];
+  property_category?: string;
 }
 
 export const featuredProperties: Property[] = [
@@ -343,7 +345,420 @@ export const newMarketProperties: Property[] = [
     { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", alt: "Extra 2" }
   ],
   slug: "tuscan-stone-villa",
-  lat: 49.4691,
-  lng: -104.3572,
+  lat: 43.7696,
+  lng: 11.2558,
+  amenities: ["pool", "parking", "ac", "wifi", "terrace"],
+  property_category: "Villa"
+  },
+  {
+    id: "n15",
+    title: "South Beach Rooftop Penthouse",
+    location: "South Beach, Miami, FL",
+    price: 2850000,
+    type: "SALE",
+    beds: 3,
+    baths: 3,
+    area: 260,
+    images: [
+      { url: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80", alt: "Rooftop pool with city skyline" },
+      { url: "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80", alt: "Living area" },
+      { url: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=800&q=80", alt: "Bedroom" }
+    ],
+    slug: "south-beach-rooftop-penthouse",
+    lat: 25.7907,
+    lng: -80.1300,
+    badge: "Exclusive",
+    amenities: ["pool", "gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Penthouse"
+  },
+  {
+    id: "n16",
+    title: "Manhattan Midtown Luxury Condo",
+    location: "Midtown Manhattan, New York",
+    price: 3500000,
+    type: "SALE",
+    beds: 2,
+    baths: 2,
+    area: 160,
+    images: [
+      { url: "https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=800&q=80", alt: "NYC skyline from floor-to-ceiling windows" },
+      { url: "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=800&q=80", alt: "Modern kitchen" },
+      { url: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=800&q=80", alt: "Bedroom suite" }
+    ],
+    slug: "manhattan-midtown-luxury-condo",
+    lat: 40.7580,
+    lng: -73.9855,
+    badge: "New Arrival",
+    amenities: ["gym", "parking", "ac", "wifi"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n17",
+    title: "El Poblado Modern Apartment",
+    location: "El Poblado, Medellín, Colombia",
+    price: 2800,
+    type: "RENT",
+    beds: 2,
+    baths: 2,
+    area: 95,
+    images: [
+      { url: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=800&q=80", alt: "Modern open-plan apartment interior" },
+      { url: "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=800&q=80", alt: "Kitchen" },
+      { url: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80", alt: "Balcony view" }
+    ],
+    slug: "el-poblado-modern-apartment",
+    lat: 6.2086,
+    lng: -75.5687,
+    amenities: ["pool", "gym", "ac", "wifi", "terrace"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n18",
+    title: "Dubai Marina Sky Tower",
+    location: "Dubai Marina, Dubai, UAE",
+    price: 12000,
+    type: "RENT",
+    beds: 4,
+    baths: 4,
+    area: 380,
+    images: [
+      { url: "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&w=800&q=80", alt: "Ultra-luxury penthouse with marina views" },
+      { url: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=80", alt: "Infinity pool" },
+      { url: "https://images.unsplash.com/photo-1612965607446-25e1332775ae?auto=format&fit=crop&w=800&q=80", alt: "Master bedroom" }
+    ],
+    slug: "dubai-marina-sky-tower",
+    lat: 25.0780,
+    lng: 55.1396,
+    badge: "Exclusive",
+    amenities: ["pool", "gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Penthouse"
+  },
+  {
+    id: "n19",
+    title: "Alfama Historic Townhouse",
+    location: "Alfama, Lisbon, Portugal",
+    price: 890000,
+    type: "SALE",
+    beds: 3,
+    baths: 2,
+    area: 148,
+    images: [
+      { url: "https://images.unsplash.com/photo-1526549944634-4f58bef2dfbc?auto=format&fit=crop&w=800&q=80", alt: "Traditional Portuguese townhouse facade" },
+      { url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=80", alt: "Tiled interior" },
+      { url: "https://images.unsplash.com/photo-1600585155452-990dced4db0d?auto=format&fit=crop&w=800&q=80", alt: "Rooftop terrace" }
+    ],
+    slug: "alfama-historic-townhouse",
+    lat: 38.7139,
+    lng: -9.1334,
+    amenities: ["wifi", "terrace"],
+    property_category: "Townhouse"
+  },
+  {
+    id: "n20",
+    title: "Shibuya Minimalist Apartment",
+    location: "Shibuya, Tokyo, Japan",
+    price: 3500,
+    type: "RENT",
+    beds: 1,
+    baths: 1,
+    area: 52,
+    images: [
+      { url: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=800&q=80", alt: "Japanese minimalist bedroom" },
+      { url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80", alt: "Open kitchen" },
+      { url: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", alt: "City view" }
+    ],
+    slug: "shibuya-minimalist-apartment",
+    lat: 35.6598,
+    lng: 139.7037,
+    amenities: ["ac", "wifi"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n21",
+    title: "Bondi Beachside House",
+    location: "Bondi Beach, Sydney, Australia",
+    price: 2100000,
+    type: "SALE",
+    beds: 4,
+    baths: 3,
+    area: 245,
+    images: [
+      { url: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=800&q=80", alt: "Contemporary beach house exterior" },
+      { url: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80", alt: "Open plan living" },
+      { url: "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=800&q=80", alt: "Deck with ocean view" }
+    ],
+    slug: "bondi-beachside-house",
+    lat: -33.8914,
+    lng: 151.2767,
+    badge: "New Arrival",
+    amenities: ["pool", "parking", "ac", "wifi", "terrace"],
+    property_category: "House"
+  },
+  {
+    id: "n22",
+    title: "Sea Point Clifftop Villa",
+    location: "Sea Point, Cape Town, South Africa",
+    price: 1700000,
+    type: "SALE",
+    beds: 5,
+    baths: 4,
+    area: 420,
+    images: [
+      { url: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80", alt: "Villa with Atlantic Ocean and Table Mountain views" },
+      { url: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=800&q=80", alt: "Infinity pool" },
+      { url: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=800&q=80", alt: "Panoramic living room" }
+    ],
+    slug: "sea-point-clifftop-villa",
+    lat: -33.9167,
+    lng: 18.3833,
+    badge: "Exclusive",
+    amenities: ["pool", "gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Villa"
+  },
+  {
+    id: "n23",
+    title: "Palermo Soho Loft",
+    location: "Palermo Soho, Buenos Aires, Argentina",
+    price: 1800,
+    type: "RENT",
+    beds: 2,
+    baths: 1,
+    area: 88,
+    images: [
+      { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80", alt: "Industrial chic loft with exposed brick" },
+      { url: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80", alt: "Open kitchen" },
+      { url: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80", alt: "Bedroom mezzanine" }
+    ],
+    slug: "palermo-soho-loft",
+    lat: -34.5833,
+    lng: -58.4167,
+    amenities: ["wifi", "ac"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n24",
+    title: "Eixample Design Apartment",
+    location: "Eixample, Barcelona, Spain",
+    price: 780000,
+    type: "SALE",
+    beds: 3,
+    baths: 2,
+    area: 128,
+    images: [
+      { url: "https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=800&q=80", alt: "Bright modernist apartment with original floors" },
+      { url: "https://images.unsplash.com/photo-1600573472573-ec3ecf0f01f9?auto=format&fit=crop&w=800&q=80", alt: "Kitchen" },
+      { url: "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?auto=format&fit=crop&w=800&q=80", alt: "Balcony with city view" }
+    ],
+    slug: "eixample-design-apartment",
+    lat: 41.3900,
+    lng: 2.1600,
+    amenities: ["ac", "wifi", "terrace"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n25",
+    title: "Jordaan Canal House",
+    location: "Jordaan, Amsterdam, Netherlands",
+    price: 1400000,
+    type: "SALE",
+    beds: 4,
+    baths: 3,
+    area: 190,
+    images: [
+      { url: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=800&q=80", alt: "Classic Dutch canal house" },
+      { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", alt: "Interior" },
+      { url: "https://images.unsplash.com/photo-1560185008-a33f5a064ec4?auto=format&fit=crop&w=800&q=80", alt: "Rooftop terrace" }
+    ],
+    slug: "jordaan-canal-house",
+    lat: 52.3764,
+    lng: 4.8814,
+    badge: "Design Award",
+    amenities: ["parking", "wifi", "terrace"],
+    property_category: "House"
+  },
+  {
+    id: "n26",
+    title: "Polanco Sky Penthouse",
+    location: "Polanco, Mexico City, Mexico",
+    price: 1200000,
+    type: "SALE",
+    beds: 3,
+    baths: 3,
+    area: 210,
+    images: [
+      { url: "https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=800&q=80", alt: "Contemporary penthouse with city panorama" },
+      { url: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", alt: "Rooftop terrace pool" },
+      { url: "https://images.unsplash.com/photo-1617104551722-3b2d51366400?auto=format&fit=crop&w=800&q=80", alt: "Living room" }
+    ],
+    slug: "polanco-sky-penthouse",
+    lat: 19.4326,
+    lng: -99.1932,
+    amenities: ["pool", "gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Penthouse"
+  },
+  {
+    id: "n27",
+    title: "Le Marais Haussmann Apartment",
+    location: "Le Marais, Paris, France",
+    price: 4200,
+    type: "RENT",
+    beds: 1,
+    baths: 1,
+    area: 62,
+    images: [
+      { url: "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&w=800&q=80", alt: "Classic Parisian apartment with herringbone floors" },
+      { url: "https://images.unsplash.com/photo-1560448075-cbc16bb4af8e?auto=format&fit=crop&w=800&q=80", alt: "Kitchen" },
+      { url: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80", alt: "Bedroom" }
+    ],
+    slug: "le-marais-haussmann-apartment",
+    lat: 48.8566,
+    lng: 2.3522,
+    amenities: ["ac", "wifi"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n28",
+    title: "Notting Hill Victorian House",
+    location: "Notting Hill, London, United Kingdom",
+    price: 3900000,
+    type: "SALE",
+    beds: 5,
+    baths: 4,
+    area: 370,
+    images: [
+      { url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80", alt: "Classic white Victorian London townhouse" },
+      { url: "https://images.unsplash.com/photo-1600585155452-990dced4db0d?auto=format&fit=crop&w=800&q=80", alt: "Victorian interiors" },
+      { url: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=800&q=80", alt: "Private garden" }
+    ],
+    slug: "notting-hill-victorian-house",
+    lat: 51.5167,
+    lng: -0.2000,
+    badge: "Exclusive",
+    amenities: ["parking", "ac", "wifi", "terrace"],
+    property_category: "House"
+  },
+  {
+    id: "n29",
+    title: "Seminyak Luxury Pool Villa",
+    location: "Seminyak, Bali, Indonesia",
+    price: 5500,
+    type: "RENT",
+    beds: 4,
+    baths: 4,
+    area: 350,
+    images: [
+      { url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80", alt: "Balinese villa with tropical pool garden" },
+      { url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80", alt: "Open-air living pavilion" },
+      { url: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80", alt: "Bedroom with garden view" }
+    ],
+    slug: "seminyak-luxury-pool-villa",
+    lat: -8.6897,
+    lng: 115.1619,
+    badge: "Exclusive",
+    amenities: ["pool", "gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Villa"
+  },
+  {
+    id: "n30",
+    title: "Tulum Jungle Eco-Retreat",
+    location: "Tulum, Quintana Roo, Mexico",
+    price: 3800,
+    type: "RENT",
+    beds: 3,
+    baths: 3,
+    area: 280,
+    images: [
+      { url: "https://images.unsplash.com/photo-1464146072230-91cabc968ddb?auto=format&fit=crop&w=800&q=80", alt: "Jungle retreat with cenote pool" },
+      { url: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=800&q=80", alt: "Thatched open living room" },
+      { url: "https://images.unsplash.com/photo-1601918774516-88be32e9e706?auto=format&fit=crop&w=800&q=80", alt: "Outdoor shower" }
+    ],
+    slug: "tulum-jungle-eco-retreat",
+    lat: 20.2119,
+    lng: -87.4655,
+    amenities: ["pool", "wifi", "terrace"],
+    property_category: "Villa"
+  },
+  {
+    id: "n31",
+    title: "Santorini Caldera Cliff House",
+    location: "Oia, Santorini, Greece",
+    price: 7500,
+    type: "RENT",
+    beds: 2,
+    baths: 2,
+    area: 115,
+    images: [
+      { url: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=800&q=80", alt: "Santorini white-washed cave house over caldera" },
+      { url: "https://images.unsplash.com/photo-1601918774516-88be32e9e706?auto=format&fit=crop&w=800&q=80", alt: "Infinity pool at sunset" },
+      { url: "https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?auto=format&fit=crop&w=800&q=80", alt: "Bedroom with volcano view" }
+    ],
+    slug: "santorini-caldera-cliff-house",
+    lat: 36.4619,
+    lng: 25.3753,
+    badge: "Exclusive",
+    amenities: ["pool", "ac", "wifi", "terrace"],
+    property_category: "House"
+  },
+  {
+    id: "n32",
+    title: "Plateau-Mont-Royal Loft",
+    location: "Plateau-Mont-Royal, Montreal, Canada",
+    price: 620000,
+    type: "SALE",
+    beds: 2,
+    baths: 1,
+    area: 102,
+    images: [
+      { url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80", alt: "Montreal loft with exposed brick and beams" },
+      { url: "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=800&q=80", alt: "Kitchen" },
+      { url: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80", alt: "Bedroom" }
+    ],
+    slug: "plateau-mont-royal-loft",
+    lat: 45.5267,
+    lng: -73.5781,
+    amenities: ["parking", "wifi"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n33",
+    title: "Coal Harbour Waterfront Condo",
+    location: "Coal Harbour, Vancouver, Canada",
+    price: 1100000,
+    type: "SALE",
+    beds: 2,
+    baths: 2,
+    area: 118,
+    images: [
+      { url: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80", alt: "Glass condo tower with marina and mountain views" },
+      { url: "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=800&q=80", alt: "Kitchen" },
+      { url: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=800&q=80", alt: "Master bedroom" }
+    ],
+    slug: "coal-harbour-waterfront-condo",
+    lat: 49.2900,
+    lng: -123.1200,
+    badge: "New Arrival",
+    amenities: ["gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Apartment"
+  },
+  {
+    id: "n34",
+    title: "Gold Coast Skyline Penthouse",
+    location: "Gold Coast, Chicago, IL",
+    price: 2400000,
+    type: "SALE",
+    beds: 4,
+    baths: 3,
+    area: 295,
+    images: [
+      { url: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80", alt: "Chicago Gold Coast penthouse with lake views" },
+      { url: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", alt: "Terrace" },
+      { url: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=800&q=80", alt: "Living room with lake view" }
+    ],
+    slug: "gold-coast-skyline-penthouse",
+    lat: 41.9013,
+    lng: -87.6266,
+    badge: "Design Award",
+    amenities: ["gym", "parking", "ac", "wifi", "terrace"],
+    property_category: "Penthouse"
   }
 ];
