@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LuxeEstate
 
-## Getting Started
+Aplicación inmobiliaria construida con Next.js, Supabase y Tailwind CSS.
 
-First, run the development server:
+## Desarrollo
+
+Instala las dependencias y ejecuta el servidor:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables de entorno
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copia `.env.template` como `.env.local` y completa las variables públicas de Supabase:
 
-## Learn More
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
+```
 
-To learn more about Next.js, take a look at the following resources:
+La `anon key` es una clave pública pensada para el cliente. Nunca agregues una `service_role key` al frontend ni al repositorio.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Login con Google y GitHub
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+La ruta de autenticación social es `/login` y el callback es:
 
-## Deploy on Vercel
+```text
+http://localhost:3000/auth/callback
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+En producción reemplaza el dominio por el dominio real de la aplicación.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Supabase
+
+En el panel de Supabase:
+
+1. Ve a **Authentication → Providers**.
+2. Activa **Google** y/o **GitHub**.
+3. Introduce el Client ID y Client Secret de cada proveedor.
+4. En **Authentication → URL Configuration**, configura:
+   - **Site URL**: `http://localhost:3000` durante el desarrollo.
+   - **Additional Redirect URLs**: `http://localhost:3000/auth/callback` y la URL de producción correspondiente.
+
+La callback URL que deben aceptar Google y GitHub normalmente tiene este formato:
+
+```text
+https://<project-ref>.supabase.co/auth/v1/callback
+```
+
+Usa la URL exacta mostrada por tu proyecto Supabase.
+
+### Google Cloud Console
+
+1. Crea o selecciona un proyecto en Google Cloud.
+2. Configura la pantalla de consentimiento OAuth.
+3. Crea un OAuth Client ID de tipo **Web application**.
+4. Agrega la callback URL de Supabase como **Authorized redirect URI**.
+5. Copia el Client ID y Client Secret en el proveedor Google de Supabase.
+
+### GitHub OAuth App
+
+1. En GitHub abre **Settings → Developer settings → OAuth Apps**.
+2. Crea una nueva OAuth App.
+3. Configura la homepage de la aplicación.
+4. Agrega la callback URL de Supabase como **Authorization callback URL**.
+5. Copia el Client ID y genera un Client Secret para introducirlos en Supabase.
+
+## Flujo implementado
+
+- `/login`: interfaz basada en el diseño social de referencia.
+- Google Sign In mediante `supabase.auth.signInWithOAuth`.
+- GitHub Sign In mediante `supabase.auth.signInWithOAuth`.
+- `/auth/callback`: intercambio del código OAuth por una sesión.
+- Middleware SSR para refrescar cookies de sesión.
+- Estado global con `AuthProvider` y `useAuth`.
+- Avatar de Google/GitHub en el navbar.
+- Fallback con iniciales si no existe o falla el avatar.
+- Menú de usuario y cierre de sesión.
+
+## Validación
+
+```bash
+npm run build
+npm run lint
+```

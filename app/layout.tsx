@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
-  title: "Home Discover Screen - Premium Real Estate",
+  title: "LuxeEstate - Premium Real Estate",
   description: "Find your sanctuary.",
 };
 
@@ -29,7 +30,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LanguageProvider>
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </LanguageProvider>
       </body>
     </html>

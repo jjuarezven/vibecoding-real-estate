@@ -1,110 +1,124 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "@/context/LanguageContext";
+import { useAuth } from "@/context/AuthContext";
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "U";
+  return parts.slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+}
 
 export default function Navbar() {
   const { t } = useTranslation();
+  const { user, loading, signOut } = useAuth();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [avatarFailed, setAvatarFailed] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const metadata = user?.user_metadata ?? {};
+  const displayName = metadata.full_name || metadata.name || user?.email || "Usuario";
+  const avatarUrl = metadata.avatar_url || metadata.picture || metadata.avatar;
+  const initials = getInitials(displayName);
+
+  useEffect(() => {
+    setAvatarFailed(false);
+  }, [avatarUrl]);
+
+  const handleSignOut = async () => {
+    setIsUserMenuOpen(false);
+    await signOut();
+  };
 
   return (
-    <nav className="sticky top-0 z-50 bg-background-light/95 backdrop-blur-md border-b border-nordic-dark/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-            <div className="w-8 h-8 rounded-lg bg-nordic-dark flex items-center justify-center">
-              <span className="material-icons text-white text-lg">apartment</span>
+    <nav className="sticky top-0 z-50 border-b border-nordic-dark/10 bg-background-light/95 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between">
+          <Link href="/" className="flex flex-shrink-0 cursor-pointer items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-nordic-dark">
+              <span className="material-icons text-lg text-white">apartment</span>
             </div>
-            <span className="text-xl font-semibold tracking-tight text-nordic-dark">
-              {t("navbar.brand")}
-            </span>
+            <span className="text-xl font-semibold tracking-tight text-nordic-dark">{t("navbar.brand")}</span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <Link
-              className="text-mosque font-medium text-sm border-b-2 border-mosque px-1 py-1"
-              href="/?type=SALE"
-            >
-              {t("navbar.buy")}
-            </Link>
-            <Link
-              className="text-nordic-dark/70 hover:text-nordic-dark font-medium text-sm hover:border-b-2 hover:border-nordic-dark/20 px-1 py-1 transition-all"
-              href="/?type=RENT"
-            >
-              {t("navbar.rent")}
-            </Link>
-            <a
-              className="text-nordic-dark/70 hover:text-nordic-dark font-medium text-sm hover:border-b-2 hover:border-nordic-dark/20 px-1 py-1 transition-all"
-              href="#"
-            >
-              {t("navbar.sell")}
-            </a>
-            <a
-              className="text-nordic-dark/70 hover:text-nordic-dark font-medium text-sm hover:border-b-2 hover:border-nordic-dark/20 px-1 py-1 transition-all"
-              href="#"
-            >
-              {t("navbar.savedHomes")}
-            </a>
+          <div className="hidden items-center space-x-8 md:flex">
+            <Link className="border-b-2 border-mosque px-1 py-1 text-sm font-medium text-mosque" href="/?type=SALE">{t("navbar.buy")}</Link>
+            <Link className="px-1 py-1 text-sm font-medium text-nordic-dark/70 transition-all hover:border-b-2 hover:border-nordic-dark/20 hover:text-nordic-dark" href="/?type=RENT">{t("navbar.rent")}</Link>
+            <a className="px-1 py-1 text-sm font-medium text-nordic-dark/70 transition-all hover:border-b-2 hover:border-nordic-dark/20 hover:text-nordic-dark" href="#">{t("navbar.sell")}</a>
+            <a className="px-1 py-1 text-sm font-medium text-nordic-dark/70 transition-all hover:border-b-2 hover:border-nordic-dark/20 hover:text-nordic-dark" href="#">{t("navbar.savedHomes")}</a>
           </div>
 
           <div className="flex items-center space-x-3 sm:space-x-5">
-            {/* Selector de idioma con banderas */}
             <LanguageSelector />
+            <button className="text-nordic-dark transition-colors hover:text-mosque" title={t("navbar.search")}><span className="material-icons">search</span></button>
+            <button className="relative text-nordic-dark transition-colors hover:text-mosque" title={t("navbar.notifications")}><span className="material-icons">notifications_none</span><span className="absolute right-0 top-0 h-2 w-2 rounded-full border-2 border-background-light bg-red-500" /></button>
 
-            <button
-              className="text-nordic-dark hover:text-mosque transition-colors"
-              title={t("navbar.search")}
-            >
-              <span className="material-icons">search</span>
-            </button>
-            <button
-              className="text-nordic-dark hover:text-mosque transition-colors relative"
-              title={t("navbar.notifications")}
-            >
-              <span className="material-icons">notifications_none</span>
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-background-light"></span>
-            </button>
-            <button
-              className="flex items-center gap-2 pl-2 border-l border-nordic-dark/10"
-              title={t("navbar.profile")}
-            >
-              <div className="w-9 h-9 rounded-full bg-gray-200 overflow-hidden ring-2 ring-transparent hover:ring-mosque transition-all">
-                <img
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAWhQZ663Bd08kmzjbOPmUk4UIxYooNONShMEFXLR-DtmVi6Oz-TiaY77SPwFk7g0OobkeZEOMvt6v29mSOD0Xm2g95WbBG3ZjWXmiABOUwGU0LOySRfVDo-JTXQ0-gtwjWxbmue0qDm91m-zEOEZwAW6iRFB1qC1bAU-wkjxm67Sbztq8w7srHkFT9bVEC86qG-FzhOBTomhAurNRmx9l8Yfqabk328NfdKuVLckgCdaPsNFE3yN65MeoRi05GA_gXIMwG4YDIeA"
-                />
+            {loading ? (
+              <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200" aria-label={t("navbar.loading")} />
+            ) : user ? (
+              <div className="relative border-l border-nordic-dark/10 pl-2" ref={menuRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsUserMenuOpen((open) => !open)}
+                  className="flex items-center gap-2"
+                  title={displayName}
+                  aria-label={t("navbar.userMenu")}
+                  aria-expanded={isUserMenuOpen}
+                  aria-haspopup="menu"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-mosque text-sm font-semibold text-white ring-2 ring-transparent transition-all hover:ring-mosque">
+                    {avatarUrl && !avatarFailed ? (
+                      <img src={avatarUrl} alt={`Avatar de ${displayName}`} className="h-full w-full object-cover" onError={() => setAvatarFailed(true)} />
+                    ) : initials}
+                  </div>
+                  <span className="material-icons text-base text-nordic-muted">expand_more</span>
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-3 w-64 rounded-xl border border-nordic-dark/10 bg-white p-2 shadow-xl" role="menu">
+                    <div className="border-b border-nordic-dark/5 px-3 py-2">
+                      <p className="truncate text-sm font-semibold text-nordic-dark">{displayName}</p>
+                      {user.email && <p className="truncate text-xs text-nordic-muted">{user.email}</p>}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleSignOut}
+                      className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-nordic-dark transition-colors hover:bg-red-50 hover:text-red-600"
+                      role="menuitem"
+                    >
+                      <span className="material-icons text-base">logout</span>
+                      {t("navbar.logout")}
+                    </button>
+                  </div>
+                )}
               </div>
-            </button>
+            ) : (
+              <Link href="/login" className="rounded-lg bg-mosque px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-mosque/90">{t("navbar.login")}</Link>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="md:hidden border-t border-nordic-dark/5 bg-background-light px-4 py-2 space-y-1">
-        <Link
-          className="block px-3 py-2 rounded-md text-base font-medium text-mosque bg-mosque/10"
-          href="/?type=SALE"
-        >
-          {t("navbar.buy")}
-        </Link>
-        <Link
-          className="block px-3 py-2 rounded-md text-base font-medium text-nordic-dark hover:bg-black/5"
-          href="/?type=RENT"
-        >
-          {t("navbar.rent")}
-        </Link>
-        <a
-          className="block px-3 py-2 rounded-md text-base font-medium text-nordic-dark hover:bg-black/5"
-          href="#"
-        >
-          {t("navbar.sell")}
-        </a>
-        <a
-          className="block px-3 py-2 rounded-md text-base font-medium text-nordic-dark hover:bg-black/5"
-          href="#"
-        >
-          {t("navbar.savedHomes")}
-        </a>
+      <div className="space-y-1 border-t border-nordic-dark/5 bg-background-light px-4 py-2 md:hidden">
+        <Link className="block rounded-md bg-mosque/10 px-3 py-2 text-base font-medium text-mosque" href="/?type=SALE">{t("navbar.buy")}</Link>
+        <Link className="block rounded-md px-3 py-2 text-base font-medium text-nordic-dark hover:bg-black/5" href="/?type=RENT">{t("navbar.rent")}</Link>
+        <a className="block rounded-md px-3 py-2 text-base font-medium text-nordic-dark hover:bg-black/5" href="#">{t("navbar.sell")}</a>
+        <a className="block rounded-md px-3 py-2 text-base font-medium text-nordic-dark hover:bg-black/5" href="#">{t("navbar.savedHomes")}</a>
+        {!loading && !user && <Link className="block rounded-md bg-mosque px-3 py-2 text-base font-medium text-white" href="/login">{t("navbar.login")}</Link>}
+        {!loading && user && <button type="button" onClick={handleSignOut} className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-base font-medium text-red-600 hover:bg-red-50"><span className="material-icons text-base">logout</span>{t("navbar.logout")}</button>}
       </div>
     </nav>
   );
