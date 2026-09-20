@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "@/context/LanguageContext";
 import { useAuth } from "@/context/AuthContext";
 
@@ -13,15 +13,34 @@ function getInitials(name: string) {
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
   const [avatarFailed, setAvatarFailed] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const metadata = user?.user_metadata ?? {};
   const displayName = metadata.full_name || metadata.name || user?.email || "Usuario";
   const avatarUrl = metadata.avatar_url || metadata.picture || metadata.avatar;
   const initials = getInitials(displayName);
 
   useEffect(() => setAvatarFailed(false), [avatarUrl]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) setIsUserMenuOpen(false);
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsUserMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
 
   const navItems = [
     { href: "/admin", label: t("admin.nav.dashboard") },
@@ -30,6 +49,18 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   ];
 
   const isActive = (href: string) => href === "/admin" ? pathname === href : pathname.startsWith(href);
+
+  const handleSignOut = async () => {
+    if (isSigningOut) return;
+    setIsSigningOut(true);
+    setIsUserMenuOpen(false);
+
+    try {
+      await signOut();
+    } finally {
+      router.replace("/login");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background-light font-display text-nordic-dark">
@@ -53,9 +84,19 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               <span className="material-icons text-xl">notifications_none</span>
             </button>
             <Link href="/" className="hidden text-sm font-medium text-nordic-muted hover:text-mosque sm:block">{t("admin.nav.backToSite")}</Link>
-            <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-mosque text-sm font-semibold text-white ring-2 ring-mosque/10" title={displayName}>
-              {avatarUrl && !avatarFailed ? <img src={avatarUrl} alt={t("login.avatarAlt")} className="h-full w-full object-cover" onError={() => setAvatarFailed(true)} /> : initials}
-            </div>
+            {loading ? <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200" aria-label={t("navbar.loading")} /> : <div className="relative z-[100] border-l border-nordic-dark/10 pl-2" ref={menuRef}>
+              <button type="button" onClick={() => setIsUserMenuOpen((open) => !open)} className="flex items-center gap-2" title={displayName} aria-label={t("navbar.userMenu")} aria-expanded={isUserMenuOpen} aria-haspopup="menu">
+                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-mosque text-sm font-semibold text-white ring-2 ring-transparent transition-all hover:ring-mosque">
+                  {avatarUrl && !avatarFailed ? <img src={avatarUrl} alt={t("login.avatarAlt")} className="h-full w-full object-cover" onError={() => setAvatarFailed(true)} /> : initials}
+                </div>
+                <span className="material-icons text-base text-nordic-muted">expand_more</span>
+              </button>
+              {isUserMenuOpen && <div className="absolute right-0 top-full z-[110] mt-3 w-64 rounded-xl border border-nordic-dark/10 bg-white p-2 shadow-xl" role="menu">
+                <div className="border-b border-nordic-dark/5 px-3 py-2"><p className="truncate text-sm font-semibold text-nordic-dark">{displayName}</p>{user?.email && <p className="truncate text-xs text-nordic-muted">{user.email}</p>}</div>
+                <Link href="/" onClick={() => setIsUserMenuOpen(false)} className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-nordic-dark transition-colors hover:bg-mosque/10 hover:text-mosque" role="menuitem"><span className="material-icons text-base">home</span>{t("admin.nav.backToSite")}</Link>
+                <button type="button" onClick={handleSignOut} disabled={isSigningOut} className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-nordic-dark transition-colors hover:bg-red-50 hover:text-red-600 disabled:cursor-wait disabled:opacity-60" role="menuitem"><span className="material-icons text-base">logout</span>{isSigningOut ? t("navbar.signingOut") : t("navbar.logout")}</button>
+              </div>}
+            </div>}
           </div>
         </div>
       </nav>

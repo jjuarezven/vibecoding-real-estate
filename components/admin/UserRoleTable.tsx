@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage, useTranslation } from "@/context/LanguageContext";
+import { ADMIN_PAGE_SIZE } from "@/constants/admin";
+import AdminPagination from "@/components/admin/AdminPagination";
 
 type Role = "admin" | "manager" | "user";
 type User = { id: string; email: string | null; display_name: string | null; avatar_url?: string | null; created_at: string; role: string; role_updated_at: string | null };
@@ -16,13 +18,29 @@ export default function UserRoleTable({ users }: { users: User[] }) {
   const [rows, setRows] = useState(users);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | Role>("all");
+  const [page, setPage] = useState(1);
   const [saving, setSaving] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const roleLabels: Record<Role, string> = { admin: t("admin.roles.admin"), manager: t("admin.roles.manager"), user: t("admin.roles.user") };
+
   const filtered = useMemo(() => rows.filter((user) => {
     const matchesQuery = `${user.display_name ?? ""} ${user.email ?? ""}`.toLowerCase().includes(query.toLowerCase());
     return matchesQuery && (filter === "all" || user.role === filter);
   }), [filter, query, rows]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * ADMIN_PAGE_SIZE;
+    return filtered.slice(start, start + ADMIN_PAGE_SIZE);
+  }, [filtered, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [query, filter]);
+
+  useEffect(() => {
+    const totalPages = Math.max(1, Math.ceil(filtered.length / ADMIN_PAGE_SIZE));
+    if (page > totalPages) setPage(totalPages);
+  }, [filtered.length, page]);
 
   const updateRole = async (id: string, role: Role) => {
     setSaving(id); setMessage(null);
@@ -47,7 +65,7 @@ export default function UserRoleTable({ users }: { users: User[] }) {
       {message && <p role="alert" className="mt-4 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">{message}</p>}
       <div className="mt-4 hidden grid-cols-12 gap-4 px-5 text-xs font-semibold uppercase tracking-wider text-nordic-muted md:grid"><div className="col-span-4">{t("admin.users.userDetails")}</div><div className="col-span-3">{t("admin.users.roleStatus")}</div><div className="col-span-3">{t("admin.users.account")}</div><div className="col-span-2 text-right">{t("admin.users.actions")}</div></div>
       <div className="mt-2 space-y-3">
-        {filtered.map((user, index) => <div key={user.id} className={`group rounded-xl border border-transparent p-5 shadow-sm transition hover:shadow-soft md:grid md:grid-cols-12 md:items-center md:gap-4 ${index === 0 ? "bg-hint-green" : "bg-white hover:bg-hint-green/60"}`}>
+        {paginated.map((user, index) => <div key={user.id} className={`group rounded-xl border border-transparent p-5 shadow-sm transition hover:shadow-soft md:grid md:grid-cols-12 md:items-center md:gap-4 ${index === 0 && page === 1 ? "bg-hint-green" : "bg-white hover:bg-hint-green/60"}`}>
           <div className="flex min-w-0 items-center md:col-span-4"><div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-mosque text-sm font-bold text-white ring-2 ring-white">{user.avatar_url ? <img src={user.avatar_url} alt="" className="h-full w-full object-cover" /> : initials(user)}</div><div className="ml-4 min-w-0"><p className="truncate text-sm font-bold">{user.display_name || t("admin.users.noName")}</p><p className="truncate text-xs text-nordic-muted">{user.email || t("admin.users.noEmail")}</p><p className="mt-1 inline-block rounded bg-white/60 px-2 py-0.5 text-[10px] text-nordic-muted">ID: #{user.id.slice(0, 8).toUpperCase()}</p></div></div>
           <div className="mt-4 flex items-center justify-between gap-4 md:col-span-3 md:mt-0 md:justify-start"><span className={`rounded-md px-2.5 py-1 text-xs font-medium ${user.role === "admin" ? "bg-nordic-dark text-white" : "bg-mosque/10 text-mosque"}`}>{roleLabels[user.role as Role] ?? user.role}</span><span className="flex items-center text-xs text-nordic-muted"><span className="material-icons mr-1 text-[14px] text-mosque">check_circle</span>{t("admin.users.active")}</span></div>
           <div className="mt-4 grid grid-cols-2 gap-4 md:col-span-3 md:mt-0"><div><p className="text-[10px] uppercase tracking-wider text-nordic-muted">{t("admin.users.joined")}</p><p className="text-sm font-semibold">{new Date(user.created_at).toLocaleDateString(locale)}</p></div><div><p className="text-[10px] uppercase tracking-wider text-nordic-muted">{t("admin.users.provider")}</p><p className="text-sm font-semibold">{t("admin.users.socialLogin")}</p></div></div>
@@ -55,7 +73,7 @@ export default function UserRoleTable({ users }: { users: User[] }) {
         </div>)}
       </div>
       {filtered.length === 0 && <div className="rounded-xl bg-white p-12 text-center text-sm text-nordic-muted shadow-sm">{t("admin.users.empty")}</div>}
-      <div className="mt-6 flex items-center justify-between border-t border-nordic-dark/5 pt-5 text-sm text-nordic-muted"><span>{t("admin.users.showing", { shown: filtered.length, total: rows.length })}</span><div className="flex gap-2"><button type="button" disabled className="rounded-md border border-gray-200 px-3 py-1 opacity-50">{t("pagination.previous")}</button><button type="button" disabled className="rounded-md border border-gray-200 px-3 py-1 opacity-50">{t("pagination.next")}</button></div></div>
+      <AdminPagination page={page} pageSize={ADMIN_PAGE_SIZE} total={filtered.length} onPageChange={setPage} />
     </div>
   );
 }

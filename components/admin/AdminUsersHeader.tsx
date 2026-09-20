@@ -12,7 +12,7 @@ export default function AdminUsersHeader({ count }: { count: number }) {
       </div>
       <div className="flex w-full gap-3 sm:w-auto">
         <div className="hidden items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm text-nordic-muted shadow-soft sm:flex"><span className="material-icons text-lg">group</span>{t("admin.users.userCount", { count })}</div>
-        <button type="button" disabled className="inline-flex items-center justify-center rounded-lg border border-mosque px-4 py-2.5 text-sm font-medium text-mosque opacity-70 sm:w-auto"><span className="material-icons mr-2 text-lg">add</span>{t("admin.users.addUser")}</button>
+        <button type="button" disabled className="inline-flex items-center gap-2 rounded-lg bg-mosque px-5 py-2.5 text-sm font-medium text-white opacity-70 shadow-md"><span className="material-icons text-base">add</span>{t("admin.users.addUser")}</button>
       </div>
     </div>
   );
