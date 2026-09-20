@@ -17,8 +17,7 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from("properties")
-    .select("id", { count: "exact", head: true })
-    .eq("is_featured", false);
+    .select("id", { count: "exact", head: true });
 
   if (q && q.trim()) {
     const terms = getSearchTerms(q);
@@ -33,7 +32,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (category && category !== "Any" && category !== "Any Type" && category !== "All") {
-    query = query.eq("property_category", category);
+    query = query.ilike("property_category", category);
   }
 
   if (minPrice && !isNaN(Number(minPrice))) {

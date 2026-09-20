@@ -25,15 +25,23 @@ export default async function Home({ searchParams }: Props) {
   const hasAnyFilter = Boolean(q || type || (category && category !== "All") || minPrice || maxPrice || beds || baths || amenities);
 
   const supabase = await createClient();
-  const { data: featuredProperties } = await supabase.from("properties").select("*").eq("is_featured", true).limit(4);
-  let query = supabase.from("properties").select("*", { count: "exact" }).eq("is_featured", false);
+  const { data: featuredProperties } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("is_featured", true)
+    .order("created_at", { ascending: false })
+    .limit(4);
+
+  let query = supabase.from("properties").select("*", { count: "exact" });
 
   if (q) {
     const orFilter = buildOrFilterString(getSearchTerms(q));
     if (orFilter) query = query.or(orFilter);
   }
   if (type && type !== "All" && type !== "Any") query = query.eq("type", type);
-  if (category && category !== "All" && category !== "Any" && category !== "Any Type") query = query.eq("property_category", category);
+  if (category && category !== "All" && category !== "Any" && category !== "Any Type") {
+    query = query.ilike("property_category", category);
+  }
   if (minPrice && !isNaN(Number(minPrice))) query = query.gte("price", Number(minPrice));
   if (maxPrice && !isNaN(Number(maxPrice))) query = query.lte("price", Number(maxPrice));
   if (beds && !isNaN(Number(beds)) && Number(beds) > 0) query = query.gte("beds", Number(beds));
@@ -43,7 +51,9 @@ export default async function Home({ searchParams }: Props) {
     if (list.length > 0) query = query.contains("amenities", list);
   }
 
-  const { data: newMarketProperties, count } = await query.range(from, to).order("id", { ascending: true });
+  const { data: newMarketProperties, count } = await query
+    .range(from, to)
+    .order("created_at", { ascending: false });
   const totalPages = Math.ceil((count || 0) / ITEMS_PER_PAGE);
 
   return (
