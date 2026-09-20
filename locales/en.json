@@ -1,24 +1,7 @@
 {
-  "navbar": {
-    "brand": "LuxeEstate",
-    "buy": "Buy",
-    "rent": "Rent",
-    "sell": "Sell",
-    "savedHomes": "Saved Homes",
-    "search": "Search",
-    "notifications": "Notifications",
-    "profile": "Profile",
-    "login": "Sign in",
-    "logout": "Sign out",
-    "userMenu": "Open user menu",
-    "loading": "Loading session"
-  },
-  "hero": {
-    "titlePrefix": "Find your", "titleHighlight": "sanctuary", "searchPlaceholder": "Search by city, neighborhood, or address...", "searchButton": "Search", "categories": { "all": "All", "house": "House", "apartment": "Apartment", "villa": "Villa", "penthouse": "Penthouse" }, "filters": "Filters"
-  },
-  "home": {
-    "featuredTitle": "Featured Collections", "featuredSubtitle": "Curated properties for the discerning eye.", "viewAll": "View all", "newInMarket": "New in Market", "searchResults": "Search & Filter Results", "freshOpportunities": "Fresh opportunities added this week.", "showingResults": "Showing {count} {plural} matching your criteria.", "propertySingular": "property", "propertyPlural": "properties", "tabAll": "All", "tabBuy": "Buy", "tabRent": "Rent", "reset": "Reset", "noPropertiesTitle": "No properties found", "noPropertiesDesc": "We couldn't find any properties matching your current search and filter combination.", "clearAllFilters": "Clear all filters"
-  },
+  "navbar": { "brand": "LuxeEstate", "buy": "Buy", "rent": "Rent", "sell": "Sell", "savedHomes": "Saved Homes", "search": "Search", "notifications": "Notifications", "profile": "Profile", "login": "Sign in", "logout": "Sign out", "userMenu": "Open user menu", "loading": "Loading session" },
+  "hero": { "titlePrefix": "Find your", "titleHighlight": "sanctuary", "searchPlaceholder": "Search by city, neighborhood, or address...", "searchButton": "Search", "categories": { "all": "All", "house": "House", "apartment": "Apartment", "villa": "Villa", "penthouse": "Penthouse" }, "filters": "Filters" },
+  "home": { "featuredTitle": "Featured Collections", "featuredSubtitle": "Curated properties for the discerning eye.", "viewAll": "View all", "newInMarket": "New in Market", "searchResults": "Search & Filter Results", "freshOpportunities": "Fresh opportunities added this week.", "showingResults": "Showing {count} {plural} matching your criteria.", "propertySingular": "property", "propertyPlural": "properties", "tabAll": "All", "tabBuy": "Buy", "tabRent": "Rent", "reset": "Reset", "noPropertiesTitle": "No properties found", "noPropertiesDesc": "We couldn't find any properties matching your current search and filter combination.", "clearAllFilters": "Clear all filters" },
   "badges": { "exclusive": "Exclusive", "newArrival": "New Arrival", "designAward": "Design Award" },
   "gallery": { "photos": "{count} photos", "seeMore": "+{count} more" },
   "propertyCard": { "forRent": "FOR RENT", "forSale": "FOR SALE", "perMonth": "/mo", "beds": "Beds", "baths": "Baths", "areaUnit": "m²" },
@@ -26,15 +9,12 @@
   "filtersModal": { "title": "Filters", "close": "Close filters", "location": "Location", "locationPlaceholder": "City, neighborhood, or address", "priceRange": "Price Range", "minPrice": "Min Price", "maxPrice": "Max Price", "propertyType": "Property Type", "anyType": "Any Type", "bedrooms": "Bedrooms", "bathrooms": "Bathrooms", "any": "Any", "amenities": "Amenities", "swimmingPool": "Swimming Pool", "gym": "Gym", "parking": "Parking", "airConditioning": "Air Conditioning", "wifi": "High-speed Wifi", "patioTerrace": "Patio / Terrace", "clear": "Clear", "apply": "Apply Filters", "matchingProperties": "matching properties", "searching": "Searching..." },
   "pagination": { "previous": "Previous", "next": "Next", "pageOf": "Page {current} of {total}" },
   "language": { "select": "Language", "en": "English", "es": "Spanish", "fr": "French" },
-  "login": {
-    "welcome": "Welcome to LuxeEstate",
-    "subtitle": "Discover exclusive properties around the world.",
-    "continueWith": "Continue with {provider}",
-    "connecting": "Connecting...",
-    "termsPrefix": "By continuing, you accept our",
-    "terms": "terms and conditions",
-    "backHome": "Back to home",
-    "error": "Could not sign in. Please try again.",
-    "avatarAlt": "User avatar"
+  "login": { "welcome": "Welcome to LuxeEstate", "subtitle": "Discover exclusive properties around the world.", "continueWith": "Continue with {provider}", "connecting": "Connecting...", "termsPrefix": "By continuing, you accept our", "terms": "terms and conditions", "backHome": "Back to home", "error": "Could not sign in. Please try again.", "avatarAlt": "User avatar" },
+  "admin": {
+    "nav": { "dashboard": "Dashboard", "listings": "Listings", "users": "Users", "backToSite": "Back to site" },
+    "footer": "© 2024 LuxeEstate. All rights reserved.",
+    "roles": { "admin": "Administrator", "manager": "Manager", "user": "User" },
+    "users": { "title": "User Directory", "subtitle": "Manage user access and roles for your properties.", "userCount": "{count} users", "addUser": "Add User", "allUsers": "All Users", "searchPlaceholder": "Search by name, email...", "userDetails": "User Details", "roleStatus": "Role & Status", "account": "Account", "actions": "Actions", "noName": "No name", "noEmail": "No email", "active": "Active", "joined": "Joined", "provider": "Provider", "socialLogin": "Social login", "changeRole": "Change role", "updateError": "The role could not be updated", "empty": "No users found.", "showing": "Showing {shown} of {total} users" },
+    "properties": { "title": "My Properties", "subtitle": "Manage your portfolio and track performance.", "filter": "Filter", "add": "Add New Property", "totalListings": "Total Listings", "activeProperties": "Active Properties", "pendingSale": "Pending Sale", "details": "Property Details", "price": "Price", "status": "Status", "actions": "Actions", "active": "Active", "pending": "Pending", "beds": "Beds", "baths": "Baths", "area": "sqft", "monthly": "Monthly listing", "forSale": "For sale", "edit": "Edit property", "delete": "Delete property", "loadError": "Properties could not be loaded.", "empty": "No properties available.", "showing": "Showing {shown} of {total} results" }
   }
 }

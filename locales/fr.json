@@ -1,24 +1,7 @@
 {
-  "navbar": {
-    "brand": "LuxeEstate",
-    "buy": "Acheter",
-    "rent": "Louer",
-    "sell": "Vendre",
-    "savedHomes": "Biens enregistrés",
-    "search": "Recherche",
-    "notifications": "Notifications",
-    "profile": "Profil",
-    "login": "Se connecter",
-    "logout": "Se déconnecter",
-    "userMenu": "Ouvrir le menu utilisateur",
-    "loading": "Chargement de la session"
-  },
-  "hero": {
-    "titlePrefix": "Trouvez votre", "titleHighlight": "sanctuaire", "searchPlaceholder": "Rechercher par ville, quartier ou adresse...", "searchButton": "Rechercher", "categories": { "all": "Tous", "house": "Maison", "apartment": "Appartement", "villa": "Villa", "penthouse": "Penthouse" }, "filters": "Filtres"
-  },
-  "home": {
-    "featuredTitle": "Collections en vedette", "featuredSubtitle": "Propriétés sélectionnées pour les plus exigeants.", "viewAll": "Voir tout", "newInMarket": "Nouveau sur le marché", "searchResults": "Résultats de recherche et filtres", "freshOpportunities": "De nouvelles opportunités ajoutées cette semaine.", "showingResults": "Affichage de {count} {plural} correspondant à vos critères.", "propertySingular": "propriété", "propertyPlural": "propriétés", "tabAll": "Tous", "tabBuy": "Acheter", "tabRent": "Louer", "reset": "Réinitialiser", "noPropertiesTitle": "Aucune propriété trouvée", "noPropertiesDesc": "Nous n'avons trouvé aucune propriété correspondant à vos critères actuels.", "clearAllFilters": "Effacer tous les filtres"
-  },
+  "navbar": { "brand": "LuxeEstate", "buy": "Acheter", "rent": "Louer", "sell": "Vendre", "savedHomes": "Biens enregistrés", "search": "Recherche", "notifications": "Notifications", "profile": "Profil", "login": "Se connecter", "logout": "Se déconnecter", "userMenu": "Ouvrir le menu utilisateur", "loading": "Chargement de la session" },
+  "hero": { "titlePrefix": "Trouvez votre", "titleHighlight": "sanctuaire", "searchPlaceholder": "Rechercher par ville, quartier ou adresse...", "searchButton": "Rechercher", "categories": { "all": "Tous", "house": "Maison", "apartment": "Appartement", "villa": "Villa", "penthouse": "Penthouse" }, "filters": "Filtres" },
+  "home": { "featuredTitle": "Collections en vedette", "featuredSubtitle": "Propriétés sélectionnées pour les plus exigeants.", "viewAll": "Voir tout", "newInMarket": "Nouveau sur le marché", "searchResults": "Résultats de recherche et filtres", "freshOpportunities": "De nouvelles opportunités ajoutées cette semaine.", "showingResults": "Affichage de {count} {plural} correspondant à vos critères.", "propertySingular": "propriété", "propertyPlural": "propriétés", "tabAll": "Tous", "tabBuy": "Acheter", "tabRent": "Louer", "reset": "Réinitialiser", "noPropertiesTitle": "Aucune propriété trouvée", "noPropertiesDesc": "Nous n'avons trouvé aucune propriété correspondant à vos critères actuels.", "clearAllFilters": "Effacer tous les filtres" },
   "badges": { "exclusive": "Exclusif", "newArrival": "Nouveauté", "designAward": "Prix du design" },
   "gallery": { "photos": "{count} photos", "seeMore": "+{count} de plus" },
   "propertyCard": { "forRent": "À LOUER", "forSale": "À VENDRE", "perMonth": "/mois", "beds": "Chambres", "baths": "Salles de bain", "areaUnit": "m²" },
@@ -26,15 +9,12 @@
   "filtersModal": { "title": "Filtres", "close": "Fermer les filtres", "location": "Localisation", "locationPlaceholder": "Ville, quartier ou adresse", "priceRange": "Fourchette de prix", "minPrice": "Prix minimum", "maxPrice": "Prix maximum", "propertyType": "Type de propriété", "anyType": "Tous les types", "bedrooms": "Chambres", "bathrooms": "Salles de bain", "any": "Tous", "amenities": "Équipements", "swimmingPool": "Piscine", "gym": "Salle de sport", "parking": "Parking", "airConditioning": "Climatisation", "wifi": "Wifi haut débit", "patioTerrace": "Patio / Terrasse", "clear": "Effacer", "apply": "Appliquer les filtres", "matchingProperties": "propriétés correspondantes", "searching": "Recherche..." },
   "pagination": { "previous": "Précédent", "next": "Suivant", "pageOf": "Page {current} sur {total}" },
   "language": { "select": "Langue", "en": "Anglais", "es": "Espagnol", "fr": "Français" },
-  "login": {
-    "welcome": "Bienvenue chez LuxeEstate",
-    "subtitle": "Découvrez des propriétés exclusives partout dans le monde.",
-    "continueWith": "Continuer avec {provider}",
-    "connecting": "Connexion...",
-    "termsPrefix": "En continuant, vous acceptez nos",
-    "terms": "conditions générales",
-    "backHome": "Retour à l'accueil",
-    "error": "Impossible de se connecter. Veuillez réessayer.",
-    "avatarAlt": "Avatar de l'utilisateur"
+  "login": { "welcome": "Bienvenue chez LuxeEstate", "subtitle": "Découvrez des propriétés exclusives partout dans le monde.", "continueWith": "Continuer avec {provider}", "connecting": "Connexion...", "termsPrefix": "En continuant, vous acceptez nos", "terms": "conditions générales", "backHome": "Retour à l'accueil", "error": "Impossible de se connecter. Veuillez réessayer.", "avatarAlt": "Avatar de l'utilisateur" },
+  "admin": {
+    "nav": { "dashboard": "Tableau de bord", "listings": "Propriétés", "users": "Utilisateurs", "backToSite": "Retour au site" },
+    "footer": "© 2024 LuxeEstate. Tous droits réservés.",
+    "roles": { "admin": "Administrateur", "manager": "Gestionnaire", "user": "Utilisateur" },
+    "users": { "title": "Annuaire des utilisateurs", "subtitle": "Gérez les accès et les rôles des utilisateurs de vos propriétés.", "userCount": "{count} utilisateurs", "addUser": "Ajouter un utilisateur", "allUsers": "Tous les utilisateurs", "searchPlaceholder": "Rechercher par nom ou e-mail...", "userDetails": "Détails utilisateur", "roleStatus": "Rôle et statut", "account": "Compte", "actions": "Actions", "noName": "Sans nom", "noEmail": "Sans e-mail", "active": "Actif", "joined": "Inscrit le", "provider": "Fournisseur", "socialLogin": "Connexion sociale", "changeRole": "Changer le rôle", "updateError": "Le rôle n'a pas pu être mis à jour", "empty": "Aucun utilisateur trouvé.", "showing": "Affichage de {shown} sur {total} utilisateurs" },
+    "properties": { "title": "Mes propriétés", "subtitle": "Gérez votre portefeuille et suivez ses performances.", "filter": "Filtrer", "add": "Ajouter une propriété", "totalListings": "Annonces totales", "activeProperties": "Propriétés actives", "pendingSale": "Ventes en attente", "details": "Détails de la propriété", "price": "Prix", "status": "Statut", "actions": "Actions", "active": "Active", "pending": "En attente", "beds": "Chambres", "baths": "Salles de bain", "area": "pieds²", "monthly": "Loyer mensuel", "forSale": "À vendre", "edit": "Modifier la propriété", "delete": "Supprimer la propriété", "loadError": "Les propriétés n'ont pas pu être chargées.", "empty": "Aucune propriété disponible.", "showing": "Affichage de {shown} sur {total} résultats" }
   }
 }
