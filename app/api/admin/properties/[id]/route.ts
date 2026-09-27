@@ -28,12 +28,19 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   return NextResponse.json({ property: data });
 }
 
+// Mantener DELETE por compatibilidad, pero ahora desactiva el registro sin eliminarlo.
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { response } = await requireAdminApi();
   if (response) return response;
   const { id } = await params;
   const supabase = await createClient();
-  const { error } = await supabase.from("properties").delete().eq("id", id);
+  const { data, error } = await supabase
+    .from("properties")
+    .update({ is_active: false })
+    .eq("id", id)
+    .select("id")
+    .single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!data) return NextResponse.json({ error: "Property not found" }, { status: 404 });
   return NextResponse.json({ success: true });
 }

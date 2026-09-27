@@ -19,6 +19,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
     .from("properties")
     .select("*")
     .eq("slug", slug)
+    .eq("is_active", true)
     .single();
 
   if (error || !property) {

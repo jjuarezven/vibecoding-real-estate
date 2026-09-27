@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLanguage, useTranslation } from "@/context/LanguageContext";
 import { ADMIN_PAGE_SIZE } from "@/constants/admin";
 import AdminPagination from "@/components/admin/AdminPagination";
 
-type Property = { id: string; title: string; location: string; type: string; price: number | string; beds: number; baths: number; area: number; images: unknown; property_category: string | null; is_featured: boolean };
+type Property = { id: string; title: string; location: string; type: string; price: number | string; beds: number; baths: number; area: number; images: unknown; property_category: string | null; is_featured: boolean; is_active: boolean };
 
 function imageUrl(images: unknown) {
   if (Array.isArray(images) && images.length > 0) {
@@ -17,7 +17,8 @@ function imageUrl(images: unknown) {
   return "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80";
 }
 
-function status(property: Property, t: (key: string) => string) {
+function status(property: Property, t: (key: string) => string, locale: string) {
+  if (!property.is_active) return { label: locale === "es" ? "Inactiva" : "Inactive", style: "bg-gray-100 text-gray-600 border-gray-200" };
   if (property.is_featured) return { label: t("admin.properties.active"), style: "bg-hint-green text-mosque border-mosque/10" };
   if (property.type === "RENT") return { label: t("admin.properties.pending"), style: "bg-orange-100 text-orange-700 border-orange-200" };
   return { label: t("admin.properties.active"), style: "bg-hint-green text-mosque border-mosque/10" };
@@ -29,28 +30,43 @@ export default function AdminPropertiesContent({ properties: initialProperties, 
   const router = useRouter();
   const [properties, setProperties] = useState(initialProperties);
   const [page, setPage] = useState(1);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
-  const active = properties.filter((p) => p.is_featured || p.type !== "RENT").length;
-  const pending = properties.filter((p) => !p.is_featured && p.type === "RENT").length;
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const active = properties.filter((p) => p.is_active).length;
+  const pending = properties.filter((p) => p.is_active && !p.is_featured && p.type === "RENT").length;
   const visibleProperties = useMemo(() => properties.slice((page - 1) * ADMIN_PAGE_SIZE, page * ADMIN_PAGE_SIZE), [page, properties]);
   const formatter = new Intl.NumberFormat(locale, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
-  useEffect(() => {
-    const totalPages = Math.max(1, Math.ceil(properties.length / ADMIN_PAGE_SIZE));
-    if (page > totalPages) setPage(totalPages);
-  }, [page, properties.length]);
 
-  const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`¿Eliminar "${title}"? Esta acción no se puede deshacer.`)) return;
-    setDeletingId(id);
+  const handleToggleActive = async (property: Property) => {
+    const nextIsActive = !property.is_active;
+    const confirmation = locale === "es"
+      ? nextIsActive ? "¿Reactivar la propiedad" : "¿Desactivar la propiedad"
+      : nextIsActive ? "Reactivate the property" : "Deactivate the property";
+    const irreversibleWarning = locale === "es" ? "La propiedad se conservará en el panel." : "The property will remain in the admin list.";
+    if (!confirm(`${confirmation} "${property.title}"? ${irreversibleWarning}`)) return;
+
+    setUpdatingId(property.id);
+    setActionError(null);
     try {
-      const res = await fetch(`/api/admin/properties/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setProperties(prev => prev.filter(p => p.id !== id));
-        router.refresh();
+      const res = await fetch(`/api/admin/properties/${property.id}`, {
+        method: nextIsActive ? "PATCH" : "DELETE",
+        ...(nextIsActive ? {
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ is_active: true }),
+        } : {}),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        setActionError(result.error || (locale === "es" ? "No se pudo actualizar el estado de la propiedad." : "Could not update the property status."));
+        return;
       }
+      setProperties((prev) => prev.map((item) => item.id === property.id ? { ...item, is_active: nextIsActive } : item));
+      router.refresh();
+    } catch {
+      setActionError(locale === "es" ? "No se pudo actualizar el estado de la propiedad." : "Could not update the property status.");
     } finally {
-      setDeletingId(null);
+      setUpdatingId(null);
     }
   };
 
@@ -75,6 +91,7 @@ export default function AdminPropertiesContent({ properties: initialProperties, 
         <Stat label={t("admin.properties.activeProperties")} value={active} icon="check_circle" accent="green" />
         <Stat label={t("admin.properties.pendingSale")} value={pending} icon="pending" accent="orange" />
       </div>
+      {actionError && <p role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{actionError}</p>}
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="hidden grid-cols-12 gap-4 border-b border-gray-100 bg-gray-50/70 px-6 py-4 text-xs font-semibold uppercase tracking-wider text-nordic-muted md:grid">
           <div className="col-span-6">{t("admin.properties.details")}</div>
@@ -83,10 +100,13 @@ export default function AdminPropertiesContent({ properties: initialProperties, 
           <div className="col-span-2 text-right">{t("admin.properties.actions")}</div>
         </div>
         {error ? <p className="p-8 text-red-600">{t("admin.properties.loadError")}</p> : visibleProperties.map((property) => {
-          const current = status(property, t);
-          const isDeleting = deletingId === property.id;
+          const current = status(property, t, locale);
+          const isUpdating = updatingId === property.id;
+          const toggleLabel = property.is_active
+            ? locale === "es" ? "Desactivar propiedad" : "Deactivate property"
+            : locale === "es" ? "Reactivar propiedad" : "Reactivate property";
           return (
-            <div key={property.id} className="group grid grid-cols-1 items-center gap-4 border-b border-gray-100 px-6 py-5 transition-colors last:border-0 hover:bg-background-light md:grid-cols-12">
+            <div key={property.id} className={`group grid grid-cols-1 items-center gap-4 border-b border-gray-100 px-6 py-5 transition-colors last:border-0 hover:bg-background-light md:grid-cols-12 ${!property.is_active ? "opacity-75" : ""}`}>
               <div className="flex gap-4 md:col-span-6">
                 <div className="h-20 w-28 shrink-0 overflow-hidden rounded-lg bg-gray-200">
                   <img src={imageUrl(property.images)} alt={property.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -118,12 +138,13 @@ export default function AdminPropertiesContent({ properties: initialProperties, 
                 </Link>
                 <button
                   type="button"
-                  disabled={isDeleting}
-                  onClick={() => handleDelete(property.id, property.title)}
-                  className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:cursor-wait disabled:opacity-50"
-                  title={t("admin.properties.delete")}
+                  disabled={isUpdating}
+                  onClick={() => handleToggleActive(property)}
+                  className={`rounded-lg p-2 transition-colors disabled:cursor-wait disabled:opacity-50 ${property.is_active ? "text-gray-400 hover:bg-red-50 hover:text-red-600" : "text-mosque hover:bg-mosque/10"}`}
+                  title={toggleLabel}
+                  aria-label={toggleLabel}
                 >
-                  <span className="material-icons text-xl">{isDeleting ? "hourglass_top" : "delete_outline"}</span>
+                  <span className="material-icons text-xl">{isUpdating ? "hourglass_top" : property.is_active ? "delete_outline" : "restore"}</span>
                 </button>
               </div>
             </div>

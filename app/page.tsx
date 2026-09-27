@@ -8,40 +8,48 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+const ALL_VALUES = new Set(["all", "any", "todos", "todas", "any type"]);
+
+function getSingleParam(value: string | string[] | undefined) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
 export default async function Home({ searchParams }: Props) {
   const sp = await searchParams;
-  const page = typeof sp?.page === "string" ? parseInt(sp.page, 10) : 1;
+  const requestedPage = Number.parseInt(getSingleParam(sp?.page), 10);
+  const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
   const ITEMS_PER_PAGE = 8;
   const from = (page - 1) * ITEMS_PER_PAGE;
   const to = from + ITEMS_PER_PAGE - 1;
-  const q = typeof sp?.q === "string" ? sp.q.trim() : undefined;
-  const type = typeof sp?.type === "string" ? sp.type : undefined;
-  const category = typeof sp?.category === "string" ? sp.category : undefined;
-  const minPrice = typeof sp?.minPrice === "string" ? sp.minPrice : undefined;
-  const maxPrice = typeof sp?.maxPrice === "string" ? sp.maxPrice : undefined;
-  const beds = typeof sp?.beds === "string" ? sp.beds : undefined;
-  const baths = typeof sp?.baths === "string" ? sp.baths : undefined;
-  const amenities = typeof sp?.amenities === "string" ? sp.amenities : undefined;
-  const hasAnyFilter = Boolean(q || type || (category && category !== "All") || minPrice || maxPrice || beds || baths || amenities);
+  const q = getSingleParam(sp?.q);
+  const requestedType = getSingleParam(sp?.type);
+  const type = requestedType && !ALL_VALUES.has(requestedType.toLowerCase()) ? requestedType : undefined;
+  const requestedCategory = getSingleParam(sp?.category);
+  const category = requestedCategory && !ALL_VALUES.has(requestedCategory.toLowerCase()) ? requestedCategory : undefined;
+  const minPrice = getSingleParam(sp?.minPrice) || undefined;
+  const maxPrice = getSingleParam(sp?.maxPrice) || undefined;
+  const beds = getSingleParam(sp?.beds) || undefined;
+  const baths = getSingleParam(sp?.baths) || undefined;
+  const amenities = getSingleParam(sp?.amenities) || undefined;
+  const hasAnyFilter = Boolean(q || type || category || minPrice || maxPrice || beds || baths || amenities);
 
   const supabase = await createClient();
   const { data: featuredProperties } = await supabase
     .from("properties")
     .select("*")
+    .eq("is_active", true)
     .eq("is_featured", true)
     .order("created_at", { ascending: false })
     .limit(4);
 
-  let query = supabase.from("properties").select("*", { count: "exact" });
+  let query = supabase.from("properties").select("*", { count: "exact" }).eq("is_active", true);
 
   if (q) {
     const orFilter = buildOrFilterString(getSearchTerms(q));
     if (orFilter) query = query.or(orFilter);
   }
-  if (type && type !== "All" && type !== "Any") query = query.eq("type", type);
-  if (category && category !== "All" && category !== "Any" && category !== "Any Type") {
-    query = query.ilike("property_category", category);
-  }
+  if (type) query = query.eq("type", type);
+  if (category) query = query.ilike("property_category", category);
   if (minPrice && !isNaN(Number(minPrice))) query = query.gte("price", Number(minPrice));
   if (maxPrice && !isNaN(Number(maxPrice))) query = query.lte("price", Number(maxPrice));
   if (beds && !isNaN(Number(beds)) && Number(beds) > 0) query = query.gte("beds", Number(beds));

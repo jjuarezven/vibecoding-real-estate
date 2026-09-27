@@ -17,7 +17,8 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from("properties")
-    .select("id", { count: "exact", head: true });
+    .select("id", { count: "exact", head: true })
+    .eq("is_active", true);
 
   if (q && q.trim()) {
     const terms = getSearchTerms(q);

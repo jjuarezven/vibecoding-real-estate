@@ -1,4 +1,5 @@
-// Helper to normalize and expand search queries (Spanish <-> English city aliases, accents, title & location search)
+// Normalize and expand search queries (including city aliases). PostgreSQL ILIKE
+// comparisons used below are case-insensitive and match partial text.
 
 const CITY_ALIASES: Record<string, string[]> = {
   tokio: ["tokyo", "tokio"],
@@ -45,35 +46,34 @@ export function getSearchTerms(rawQuery: string): string[] {
   const clean = rawQuery.trim();
   if (!clean) return [];
 
-  const lower = clean.toLowerCase();
-  const set = new Set<string>();
-  set.add(clean);
+  const lower = clean.toLocaleLowerCase();
+  const set = new Set<string>([clean]);
 
-  // Check direct alias
-  if (CITY_ALIASES[lower]) {
-    CITY_ALIASES[lower].forEach((alias) => set.add(alias));
-  }
+  const directAliases = CITY_ALIASES[lower];
+  directAliases?.forEach((alias) => set.add(alias));
 
-  // Check sub-words
-  const words = lower.split(/\s+/);
-  for (const word of words) {
-    if (CITY_ALIASES[word]) {
-      CITY_ALIASES[word].forEach((alias) => set.add(alias));
-    }
+  for (const word of lower.split(/\s+/)) {
+    CITY_ALIASES[word]?.forEach((alias) => set.add(alias));
   }
 
   return Array.from(set);
 }
 
-// Builds a PostgREST .or() filter string for searching both location and title with all term variants
+// Search titles, locations (including city/address), categories and slugs. ILIKE
+// provides case-insensitive substring matching. Remove PostgREST filter syntax
+// characters so user input cannot break the .or() expression.
 export function buildOrFilterString(terms: string[]): string {
+  const columns = ["title", "location", "property_category", "slug"];
   const parts: string[] = [];
+
   for (const term of terms) {
-    const sanitized = term.replace(/[%_,]/g, "").trim();
-    if (sanitized) {
-      parts.push(`location.ilike.%${sanitized}%`);
-      parts.push(`title.ilike.%${sanitized}%`);
+    const sanitized = term.replace(/[%,_().\\"']/g, "").trim();
+    if (!sanitized) continue;
+
+    for (const column of columns) {
+      parts.push(`${column}.ilike.%${sanitized}%`);
     }
   }
+
   return parts.join(",");
 }
