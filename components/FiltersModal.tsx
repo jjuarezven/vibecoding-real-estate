@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useTransition, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -184,7 +184,7 @@ export default function FiltersModal({ isOpen, onClose }: FiltersModalProps) {
       }
       return `$${num.toLocaleString()}`;
     };
-    return `${fmt(minPrice)} â€“ ${fmt(maxPrice)}`;
+    return `${fmt(minPrice)} – ${fmt(maxPrice)}`;
   };
 
   // Slider percent calculations

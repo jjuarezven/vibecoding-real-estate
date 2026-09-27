@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Property } from "../data/mockProperties";
 import { useTranslation } from "@/context/LanguageContext";
+import { useFavorites } from "@/context/FavoritesContext";
 
 interface FeaturedCardProps {
   property: Property;
@@ -10,6 +11,9 @@ interface FeaturedCardProps {
 
 export default function FeaturedCard({ property }: FeaturedCardProps) {
   const { t } = useTranslation();
+  const { isFavorite, toggleFavorite, hydrated } = useFavorites();
+  const favorite = isFavorite(property.id);
+  const favoriteLabel = favorite ? t("favorites.remove") : t("favorites.save");
 
   const getTranslatedBadge = (badge?: string) => {
     if (!badge) return null;
@@ -30,8 +34,19 @@ export default function FeaturedCard({ property }: FeaturedCardProps) {
               {getTranslatedBadge(property.badge)}
             </div>
           )}
-          <button type="button" onClick={(event) => event.preventDefault()} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-nordic-dark hover:bg-mosque hover:text-white transition-all">
-            <span className="material-icons text-xl">favorite_border</span>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              toggleFavorite(property.id);
+            }}
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-nordic-dark hover:bg-mosque hover:text-white transition-all"
+            aria-label={favoriteLabel}
+            aria-pressed={hydrated && favorite}
+            title={favoriteLabel}
+          >
+            <span className="material-icons text-xl">{favorite ? "favorite" : "favorite_border"}</span>
           </button>
           <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
         </div>

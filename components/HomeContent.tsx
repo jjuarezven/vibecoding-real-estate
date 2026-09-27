@@ -15,6 +15,7 @@ type Props = {
   newMarketProperties: Property[];
   count: number;
   type?: string;
+  isSellIntent: boolean;
   totalPages: number;
   page: number;
   searchParams: SearchParams;
@@ -26,6 +27,7 @@ export default function HomeContent({
   newMarketProperties,
   count,
   type,
+  isSellIntent,
   totalPages,
   page,
   searchParams,
@@ -36,7 +38,7 @@ export default function HomeContent({
   const buildTypeUrl = (newType?: string) => {
     const params = new URLSearchParams();
     Object.entries(searchParams).forEach(([key, value]) => {
-      if (key !== "page" && key !== "type" && typeof value === "string") {
+      if (key !== "page" && key !== "type" && key !== "intent" && typeof value === "string") {
         params.set(key, value);
       }
     });
@@ -74,8 +76,8 @@ export default function HomeContent({
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-white p-1 rounded-lg border border-nordic-dark/5 shadow-sm flex">
-              <Link href={buildTypeUrl(undefined)} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${!type ? "bg-nordic-dark text-white shadow-sm" : "text-nordic-muted hover:text-nordic-dark"}`}>{t("home.tabAll")}</Link>
-              <Link href={buildTypeUrl("SALE")} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${type === "SALE" ? "bg-nordic-dark text-white shadow-sm" : "text-nordic-muted hover:text-nordic-dark"}`}>{t("home.tabBuy")}</Link>
+              <Link href={buildTypeUrl(undefined)} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${!type && !isSellIntent ? "bg-nordic-dark text-white shadow-sm" : "text-nordic-muted hover:text-nordic-dark"}`}>{t("home.tabAll")}</Link>
+              <Link href={buildTypeUrl("SALE")} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${type === "SALE" && !isSellIntent ? "bg-nordic-dark text-white shadow-sm" : "text-nordic-muted hover:text-nordic-dark"}`}>{t("home.tabBuy")}</Link>
               <Link href={buildTypeUrl("RENT")} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${type === "RENT" ? "bg-nordic-dark text-white shadow-sm" : "text-nordic-muted hover:text-nordic-dark"}`}>{t("home.tabRent")}</Link>
             </div>
             {hasAnyFilter && <Link href="/" className="text-xs font-medium text-nordic-muted hover:text-mosque px-3 py-1.5 rounded-lg border border-nordic-dark/10 bg-white hover:border-mosque transition-all">{t("home.reset")}</Link>}
@@ -88,9 +90,9 @@ export default function HomeContent({
           </div>
         ) : (
           <div className="bg-white rounded-2xl p-12 text-center max-w-md mx-auto shadow-sm border border-nordic-dark/5 space-y-4">
-            <div className="w-16 h-16 mx-auto rounded-full bg-mosque/10 flex items-center justify-center text-mosque"><span className="material-icons text-3xl">search_off</span></div>
-            <h3 className="text-lg font-medium text-nordic-dark">{t("home.noPropertiesTitle")}</h3>
-            <p className="text-sm text-nordic-muted">{t("home.noPropertiesDesc")}</p>
+            <div className="w-16 h-16 mx-auto rounded-full bg-mosque/10 flex items-center justify-center text-mosque"><span className="material-icons text-3xl">{isSellIntent ? "home_work" : "search_off"}</span></div>
+            <h3 className="text-lg font-medium text-nordic-dark">{isSellIntent ? t("favorites.sellEmptyTitle") : t("home.noPropertiesTitle")}</h3>
+            <p className="text-sm text-nordic-muted">{isSellIntent ? t("favorites.sellEmptyDescription") : t("home.noPropertiesDesc")}</p>
             <Link href="/" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-mosque text-white text-sm font-medium hover:bg-mosque/90 transition-colors shadow-sm">{t("home.clearAllFilters")}</Link>
           </div>
         )}

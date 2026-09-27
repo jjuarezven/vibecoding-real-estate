@@ -1,0 +1,47 @@
+{
+  "en": {
+    "favorites": {
+      "loading": "Loading saved properties",
+      "emptyTitle": "You haven't saved any properties yet",
+      "emptyDescription": "Tap the heart on a property card to keep it here for later.",
+      "explore": "Explore properties",
+      "save": "Save property",
+      "remove": "Remove from saved properties",
+      "pageTitle": "Saved Homes",
+      "pageDescription": "Your favorite properties, saved on this device.",
+      "loadError": "Saved properties could not be loaded. Please try again later.",
+      "sellEmptyTitle": "No properties are currently listed for sale",
+      "sellEmptyDescription": "Check back soon for new homes available to buy."
+    }
+  },
+  "es": {
+    "favorites": {
+      "loading": "Cargando propiedades guardadas",
+      "emptyTitle": "Aún no has guardado propiedades",
+      "emptyDescription": "Pulsa el corazón en una propiedad para guardarla y consultarla después.",
+      "explore": "Explorar propiedades",
+      "save": "Guardar propiedad",
+      "remove": "Quitar de propiedades guardadas",
+      "pageTitle": "Propiedades guardadas",
+      "pageDescription": "Tus propiedades favoritas, guardadas en este dispositivo.",
+      "loadError": "No se pudieron cargar las propiedades guardadas. Inténtalo más tarde.",
+      "sellEmptyTitle": "No hay propiedades disponibles para la venta",
+      "sellEmptyDescription": "Vuelve pronto para descubrir nuevas propiedades en venta."
+    }
+  },
+  "fr": {
+    "favorites": {
+      "loading": "Chargement des biens enregistrés",
+      "emptyTitle": "Vous n'avez encore enregistré aucun bien",
+      "emptyDescription": "Touchez le cœur d'une annonce pour l'enregistrer et la retrouver plus tard.",
+      "explore": "Explorer les biens",
+      "save": "Enregistrer le bien",
+      "remove": "Retirer des biens enregistrés",
+      "pageTitle": "Biens enregistrés",
+      "pageDescription": "Vos biens favoris, enregistrés sur cet appareil.",
+      "loadError": "Impossible de charger les biens enregistrés. Veuillez réessayer plus tard.",
+      "sellEmptyTitle": "Aucun bien n'est actuellement proposé à la vente",
+      "sellEmptyDescription": "Revenez bientôt pour découvrir de nouveaux biens à acheter."
+    }
+  }
+}

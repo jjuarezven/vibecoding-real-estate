@@ -31,7 +31,8 @@ export default async function Home({ searchParams }: Props) {
   const beds = getSingleParam(sp?.beds) || undefined;
   const baths = getSingleParam(sp?.baths) || undefined;
   const amenities = getSingleParam(sp?.amenities) || undefined;
-  const hasAnyFilter = Boolean(q || type || category || minPrice || maxPrice || beds || baths || amenities);
+  const isSellIntent = getSingleParam(sp?.intent) === "sell";
+  const hasAnyFilter = Boolean(q || type || category || minPrice || maxPrice || beds || baths || amenities || isSellIntent);
 
   const supabase = await createClient();
   const { data: featuredProperties } = await supabase
@@ -49,6 +50,7 @@ export default async function Home({ searchParams }: Props) {
     if (orFilter) query = query.or(orFilter);
   }
   if (type) query = query.eq("type", type);
+  if (isSellIntent) query = query.eq("type", "SALE");
   if (category) query = query.ilike("property_category", category);
   if (minPrice && !isNaN(Number(minPrice))) query = query.gte("price", Number(minPrice));
   if (maxPrice && !isNaN(Number(maxPrice))) query = query.lte("price", Number(maxPrice));
@@ -75,6 +77,7 @@ export default async function Home({ searchParams }: Props) {
           newMarketProperties={newMarketProperties || []}
           count={count || 0}
           type={type}
+          isSellIntent={isSellIntent}
           totalPages={totalPages}
           page={page}
           searchParams={sp}

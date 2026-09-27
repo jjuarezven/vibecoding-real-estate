@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Property } from "../data/mockProperties";
 import { useTranslation } from "@/context/LanguageContext";
+import { useFavorites } from "@/context/FavoritesContext";
 
 interface PropertyCardProps {
   property: Property;
@@ -11,15 +12,29 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property, className = "" }: PropertyCardProps) {
   const { t } = useTranslation();
+  const { isFavorite, toggleFavorite, hydrated } = useFavorites();
   const isRent = property.type === "RENT";
+  const favorite = isFavorite(property.id);
+  const favoriteLabel = favorite ? t("favorites.remove") : t("favorites.save");
 
   return (
     <Link href={`/properties/${property.slug}`} className={`block group h-full ${className}`}>
       <article className="bg-white rounded-xl overflow-hidden shadow-card group-hover:shadow-soft transition-all duration-300 h-full flex flex-col">
         <div className="relative aspect-[4/3] overflow-hidden">
           <img alt={property.images[0].alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src={property.images[0].url} />
-          <button type="button" onClick={(event) => event.preventDefault()} className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-mosque hover:text-white transition-colors text-nordic-dark">
-            <span className="material-icons text-base">favorite_border</span>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              toggleFavorite(property.id);
+            }}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-mosque hover:text-white transition-colors text-nordic-dark"
+            aria-label={favoriteLabel}
+            aria-pressed={hydrated && favorite}
+            title={favoriteLabel}
+          >
+            <span className="material-icons text-base">{favorite ? "favorite" : "favorite_border"}</span>
           </button>
           <div className={`absolute bottom-3 left-3 text-white text-xs font-bold px-2 py-1 rounded ${isRent ? "bg-mosque/90" : "bg-nordic-dark/90"}`}>
             {isRent ? t("propertyCard.forRent") : t("propertyCard.forSale")}

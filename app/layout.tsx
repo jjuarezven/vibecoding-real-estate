@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
@@ -30,7 +31,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LanguageProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <FavoritesProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </FavoritesProvider>
         </LanguageProvider>
       </body>
     </html>
