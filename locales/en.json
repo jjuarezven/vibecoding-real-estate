@@ -251,7 +251,17 @@
       "propType_Townhouse": "Townhouse",
       "propType_Commercial": "Commercial",
       "latitude": "Latitude",
-      "longitude": "Longitude"
+      "longitude": "Longitude",
+      "mapPreview": "Location on map",
+      "mapHint": "Click on the map or drag the marker to adjust location",
+      "createSuccessTitle": "Property saved successfully!",
+      "editSuccessTitle": "Property updated successfully!",
+      "createSuccessMessage": "The new property has been successfully registered.",
+      "editSuccessMessage": "The property changes have been saved successfully.",
+      "viewListings": "Go to listings",
+      "continueEditing": "Continue editing",
+      "viewPublicProperty": "View public listing",
+      "close": "Close"
     }
   }
 }

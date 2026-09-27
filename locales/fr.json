@@ -251,7 +251,17 @@
       "propType_Townhouse": "Maison de ville",
       "propType_Commercial": "Commercial",
       "latitude": "Latitude",
-      "longitude": "Longitude"
+      "longitude": "Longitude",
+      "mapPreview": "Emplacement sur la carte",
+      "mapHint": "Cliquez sur la carte ou déplacez le marqueur pour ajuster l'emplacement",
+      "createSuccessTitle": "Propriété enregistrée avec succès !",
+      "editSuccessTitle": "Propriété mise à jour avec succès !",
+      "createSuccessMessage": "La nouvelle propriété a été enregistrée avec succès.",
+      "editSuccessMessage": "Les modifications de la propriété ont été enregistrées avec succès.",
+      "viewListings": "Aller aux annonces",
+      "continueEditing": "Continuer l'édition",
+      "viewPublicProperty": "Voir l'annonce publique",
+      "close": "Fermer"
     }
   }
 }

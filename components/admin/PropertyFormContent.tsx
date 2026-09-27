@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "@/context/LanguageContext";
+import ClientPropertyMap from "@/components/ClientPropertyMap";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type ImageItem = { url: string; path?: string; isMain?: boolean };
@@ -92,6 +93,9 @@ export default function PropertyFormContent({ mode, property }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Form state
+  const [currentMode, setCurrentMode] = useState<"create" | "edit">(mode);
+  const [currentPropertyId, setCurrentPropertyId] = useState<string | undefined>(property?.id);
+  const [currentPropertySlug, setCurrentPropertySlug] = useState<string | undefined>(property?.slug);
   const [title, setTitle] = useState(property?.title ?? "");
   const [price, setPrice] = useState(String(property?.price ?? ""));
   const [saleType, setSaleType] = useState(property?.type ?? "SALE");
@@ -114,6 +118,24 @@ export default function PropertyFormContent({ mode, property }: Props) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [charCount, setCharCount] = useState(property?.description?.length ?? 0);
+  const [successModal, setSuccessModal] = useState<{
+    isOpen: boolean;
+    mode: "create" | "edit";
+    propertyId?: string;
+    propertySlug?: string;
+    propertyTitle?: string;
+  }>({
+    isOpen: false,
+    mode,
+  });
+
+  const parsedLat = parseFloat(lat);
+  const parsedLng = parseFloat(lng);
+  const hasCoordinates =
+    lat.trim() !== "" &&
+    lng.trim() !== "" &&
+    !isNaN(parsedLat) &&
+    !isNaN(parsedLng);
 
   // ── Image upload ────────────────────────────────────────────────────────────
   const handleFiles = useCallback(async (files: FileList) => {
@@ -186,15 +208,35 @@ export default function PropertyFormContent({ mode, property }: Props) {
       parking,
     };
 
-    const isEdit = mode === "edit" && property?.id;
-    const url = isEdit ? `/api/admin/properties/${property.id}` : "/api/admin/properties";
+    const isEdit = currentMode === "edit" && currentPropertyId;
+    const url = isEdit ? `/api/admin/properties/${currentPropertyId}` : "/api/admin/properties";
     const method = isEdit ? "PATCH" : "POST";
 
     try {
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const json = await res.json();
       if (!res.ok) { setError(json.error ?? t("admin.propertyForm.saveError")); setSaving(false); return; }
-      router.push("/admin/properties");
+
+      const savedProperty = json.property;
+      const savedId = savedProperty?.id || (isEdit ? currentPropertyId : undefined);
+      const savedSlug = savedProperty?.slug || (isEdit ? currentPropertySlug : undefined);
+
+      setSaving(false);
+      setSuccessModal({
+        isOpen: true,
+        mode: currentMode,
+        propertyId: savedId,
+        propertySlug: savedSlug,
+        propertyTitle: title.trim(),
+      });
+
+      if (currentMode === "create" && savedId) {
+        setCurrentMode("edit");
+        setCurrentPropertyId(savedId);
+        if (savedSlug) setCurrentPropertySlug(savedSlug);
+        window.history.replaceState(null, "", `/admin/properties/${savedId}/edit`);
+      }
+
       router.refresh();
     } catch {
       setError(t("admin.propertyForm.saveError"));
@@ -202,7 +244,7 @@ export default function PropertyFormContent({ mode, property }: Props) {
     }
   };
 
-  const isEdit = mode === "edit";
+  const isEdit = currentMode === "edit";
   const pageTitle = isEdit ? t("admin.propertyForm.editTitle") : t("admin.propertyForm.newTitle");
 
   return (
@@ -371,6 +413,39 @@ export default function PropertyFormContent({ mode, property }: Props) {
                     <input id="pf-lng" type="number" step="any" value={lng} onChange={e => setLng(e.target.value)} placeholder="0.000000" className="w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-nordic-dark placeholder-gray-400 transition-all focus:border-mosque focus:bg-white focus:outline-none focus:ring-1 focus:ring-mosque" />
                   </div>
                 </div>
+
+                {hasCoordinates ? (
+                  <div className="mt-3 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                    <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50/80 px-3 py-2 text-xs">
+                      <div className="flex items-center gap-1.5 font-medium text-mosque">
+                        <span className="material-icons text-sm">map</span>
+                        <span>{t("admin.propertyForm.mapPreview")}</span>
+                      </div>
+                      <span className="font-mono text-[11px] text-gray-500">
+                        {parsedLat.toFixed(4)}, {parsedLng.toFixed(4)}
+                      </span>
+                    </div>
+                    <div className="relative h-56 w-full z-0">
+                      <ClientPropertyMap
+                        lat={parsedLat}
+                        lng={parsedLng}
+                        onLocationSelect={(newLat, newLng) => {
+                          setLat(newLat.toFixed(6));
+                          setLng(newLng.toFixed(6));
+                        }}
+                      />
+                    </div>
+                    <div className="border-t border-gray-100 bg-gray-50/60 px-3 py-2 text-[11px] text-gray-500 flex items-center gap-1.5">
+                      <span className="material-icons text-xs text-mosque">touch_app</span>
+                      <span>{t("admin.propertyForm.mapHint")}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 rounded-lg border border-dashed border-gray-200 bg-gray-50/60 p-3 text-xs text-gray-400">
+                    <span className="material-icons text-base text-gray-300">location_off</span>
+                    <span>Ingresa latitud y longitud para ver la vista previa del mapa.</span>
+                  </div>
+                )}
               </div>
             </SideSection>
 
@@ -441,6 +516,101 @@ export default function PropertyFormContent({ mode, property }: Props) {
             {saving ? t("admin.propertyForm.saving") : t("admin.propertyForm.save")}
           </button>
         </div>
+
+        {/* ── Informative Success Popup Modal ── */}
+        {successModal.isOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-nordic-dark/60 backdrop-blur-sm animate-in fade-in duration-200"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setSuccessModal(prev => ({ ...prev, isOpen: false }))}
+          >
+            <div
+              className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 shadow-2xl border border-gray-100 animate-in zoom-in-95 duration-200"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                type="button"
+                onClick={() => setSuccessModal(prev => ({ ...prev, isOpen: false }))}
+                className="absolute right-4 top-4 rounded-full p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                aria-label={t("admin.propertyForm.close")}
+              >
+                <span className="material-icons text-lg">close</span>
+              </button>
+
+              {/* Icon */}
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-hint-green/30 text-mosque ring-8 ring-hint-green/10">
+                <span className="material-icons text-3xl">check_circle</span>
+              </div>
+
+              {/* Title & Description */}
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-nordic-dark">
+                  {successModal.mode === "create"
+                    ? t("admin.propertyForm.createSuccessTitle")
+                    : t("admin.propertyForm.editSuccessTitle")}
+                </h3>
+                <p className="mt-2 text-sm text-gray-500">
+                  {successModal.mode === "create"
+                    ? t("admin.propertyForm.createSuccessMessage")
+                    : t("admin.propertyForm.editSuccessMessage")}
+                </p>
+
+                {/* Property summary card */}
+                {successModal.propertyTitle && (
+                  <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50/80 p-3.5 text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="material-icons text-base text-mosque">apartment</span>
+                      <p className="text-sm font-semibold text-nordic-dark truncate">
+                        {successModal.propertyTitle}
+                      </p>
+                    </div>
+                    {location && (
+                      <p className="mt-1 flex items-center gap-1 text-xs text-gray-500 truncate">
+                        <span className="material-icons text-xs text-gray-400">place</span>
+                        {location}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Action buttons */}
+              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={() => setSuccessModal(prev => ({ ...prev, isOpen: false }))}
+                  className="flex-1 rounded-lg border border-gray-200 bg-white py-2.5 px-4 text-center text-sm font-medium text-nordic-dark transition-colors hover:bg-gray-50"
+                >
+                  {t("admin.propertyForm.continueEditing")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push("/admin/properties")}
+                  className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-mosque py-2.5 px-4 text-center text-sm font-medium text-white shadow-sm transition-colors hover:bg-nordic-dark"
+                >
+                  <span className="material-icons text-sm">list_alt</span>
+                  {t("admin.propertyForm.viewListings")}
+                </button>
+              </div>
+
+              {/* Optional public listing link */}
+              {(successModal.propertySlug || successModal.propertyId) && (
+                <div className="mt-4 text-center">
+                  <Link
+                    href={`/propiedades/${successModal.propertySlug || successModal.propertyId}`}
+                    target="_blank"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-mosque hover:underline"
+                  >
+                    <span>{t("admin.propertyForm.viewPublicProperty")}</span>
+                    <span className="material-icons text-xs">open_in_new</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
     </div>
   );
 }
