@@ -14,20 +14,20 @@ Se ha completado la implementación completa del soporte multi-idioma para los i
 Los diccionarios incluyen todas las áreas de la aplicación:
 - **`navbar`**: Comprar / Alquilar / Vender / Guardados / Búsqueda / Perfil.
 - **`hero`**: Título prefix y highlight ("Encuentra tu santuario" / "Find your sanctuary" / "Trouvez votre sanctuaire"), placeholder, botón de búsqueda, filtros y categorías (Todos, Casa, Apartamento, Villa, Ático).
-- **`home`**: Colecciones destacadas, Nuevas en el mercado, pestañas (Todas / Comprar / Alquilar), botón restablecer, resultados filtrados y mensaje de sin resultados.
+- **`home`**: Colecciones destacadas, Nuevas en el mercado, pestañas (Comprar/Alquilar), conteo de propiedades y estados vacíos.
 - **`badges`**: Traducción de insignias (`Exclusive` -> *Exclusiva*, `New Arrival` -> *Novedad*, `Design Award` -> *Premio de diseño*).
 - **`gallery`**: Contador de fotos ("{count} fotos") y botón de ver más ("+{count} más").
 - **`propertyCard`**: Etiquetas de venta/alquiler, precio mensual (`/mes`, `/mo`, `/mois`), habitaciones, baños y unidad de área (`m²`).
-- **`propertyDetail`**: Ficha completa del inmueble (etiquetas de estado, especificaciones, descripción dinámica interpolada, ubicación, llamada a la acción, agendar visita, contactar asesor y rol del asesor).
-- **`filtersModal`**: Modal completo de filtros (precio, tipo, amenidades como piscina, gimnasio, wifi, terraza, botones de limpiar y aplicar).
+- **`propertyDetail`**: Ficha completa del inmueble (etiquetas de estado, especificaciones, descripción dinámica, ubicación, llamada a la acción y asesor).
+- **`filtersModal`**: Modal de filtros traducido.
 - **`pagination`**: Anterior, Siguiente y "Página X de Y".
 - **`language`**: Nombres de idiomas.
 
 ---
 
 ### B. Selector de Idiomas con Banderas SVG Vectoriales
-- **`components/FlagIcon.tsx`**: Renderiza banderas vectoriales SVG nítidas para Reino Unido (`en`), España (`es`) y Francia (`fr`). Esto garantiza que en Windows (donde la fuente del sistema no dibuja emojis de banderas) se visualicen las banderas correctamente y no códigos de texto como "FR FR" o "GB".
-- **`components/LanguageSelector.tsx`**: Menú dropdown accesible, con banderas vectoriales, nombre del idioma y código (EN, ES, FR), con cierre automático al hacer clic fuera y marcado del idioma activo.
+- **`components/FlagIcon.tsx`**: Renderiza banderas vectoriales SVG para inglés (`en`), español (`es`) y francés (`fr`).
+- **`components/LanguageSelector.tsx`**: Selector accesible con cierre automático al hacer clic fuera y marcado del idioma activo.
 
 ---
 
@@ -39,15 +39,16 @@ Los diccionarios incluyen todas las áreas de la aplicación:
 
 ### D. Componentes Actualizados
 1. **`app/layout.tsx`**: Envoltorio global con `<LanguageProvider>`.
-2. **`components/Navbar.tsx`**: Navegación traducida e inclusión de `<LanguageSelector />` en desktop y responsive.
+2. **`components/Navbar.tsx`**: Navegación traducida e inclusión de `<LanguageSelector />`.
 3. **`components/HeroSection.tsx`**: Título, buscador, categorías y filtros interactivos traducidos.
-4. **`components/HomeContent.tsx`**: Encabezados de secciones, selector de pestañas (Comprar/Alquilar), conteo de propiedades y estados vacíos.
-5. **`components/FeaturedCard.tsx`**: Badges dinámicos (`Exclusive`, `New Arrival`, etc.), habitaciones, baños y `m²`.
-6. **`components/PropertyCard.tsx`**: Badges de venta/alquiler, habitaciones, baños, `/mes` y `m²`.
-7. **`components/PropertyGallery.tsx`**: Contador de fotos y etiqueta de más fotos en el idioma activo.
-8. **`components/PropertyDetailContent.tsx`**: Nueva vista de detalle totalmente traducida que recibe la propiedad y renderiza todos los textos mediante `useTranslation()`.
-9. **`app/propiedades/[slug]/page.tsx`**: Server Component que delega la visualización interactiva a `PropertyDetailContent`.
-10. **`components/FiltersModal.tsx`**: Modal con todas las opciones y amenidades traducidas.
+4. **`components/HomeContent.tsx`**: Secciones, selector de pestañas, conteo de propiedades y estados vacíos.
+5. **`components/FeaturedCard.tsx`**: Insignias, habitaciones, baños y unidad de área traducidas.
+6. **`components/PropertyCard.tsx`**: Etiquetas de venta/alquiler y características traducidas.
+7. **`components/PropertyGallery.tsx`**: Contador de fotos y etiqueta de más fotos traducidos.
+8. **`components/PropertyDetailContent.tsx`**: Vista de detalle interactiva que recibe la propiedad.
+9. **`app/properties/[slug]/page.tsx`**: Server Component que carga la propiedad y delega la visualización a `PropertyDetailContent`.
+10. **`next.config.ts`**: Redirección permanente de `/propiedades/:slug` a `/properties/:slug` para preservar enlaces antiguos.
+11. **`components/FiltersModal.tsx`**: Modal con opciones y amenidades traducidas.
 
 ---
 
@@ -56,13 +57,13 @@ Los diccionarios incluyen todas las áreas de la aplicación:
 1. Crear el nuevo archivo JSON en `locales/<código>.json` (ejemplo: `locales/de.json` para alemán).
 2. En `context/LanguageContext.tsx`:
    - Importar el nuevo JSON.
-   - Añadir el código al tipo `SupportedLanguage`: `'es' | 'en' | 'fr' | 'de'`.
+   - Añadir el código al tipo `SupportedLanguage`.
    - Añadirlo al mapa `locales` y a la lista `LANGUAGES`.
 3. En `components/FlagIcon.tsx`:
-   - Añadir el SVG de la bandera correspondiente para el nuevo código.
+   - Añadir el SVG de la bandera correspondiente para el nuevo idioma.
 
 ---
 
-## 3. Estado de Compilación
-- `npm run build` ejecutado exitosamente con **Turbopack** y **TypeScript**.
-- Cero errores de compilación y cero errores de tipos.
+## 3. Validación
+
+Ejecutar `npm run build` y `npm run lint` para validar los cambios.

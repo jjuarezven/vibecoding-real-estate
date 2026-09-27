@@ -599,7 +599,7 @@ export default function PropertyFormContent({ mode, property }: Props) {
               {(successModal.propertySlug || successModal.propertyId) && (
                 <div className="mt-4 text-center">
                   <Link
-                    href={`/propiedades/${successModal.propertySlug || successModal.propertyId}`}
+                    href={`/properties/${successModal.propertySlug || successModal.propertyId}`}
                     target="_blank"
                     className="inline-flex items-center gap-1 text-xs font-medium text-mosque hover:underline"
                   >

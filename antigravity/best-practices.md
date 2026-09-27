@@ -18,7 +18,7 @@ Resumen de recomendaciones técnicas clave y mejores prácticas para plataformas
 
 ## 🔎 3. SEO y Visibilidad (Optimización en Buscadores)
 - **Metadata API y Open Graph**: Inyectar Títulos, Precios y la foto principal dinámicamente en `[slug]/page.tsx` para crear enlaces atractivos al compartir en WhatsApp o Redes Sociales.
-- **URLs Amigables (Slugs)**: Utilizar rutas descriptivas (ej. `/propiedades/casa-baleares-3-recamaras`) en lugar de IDs aleatorios.
+- **URLs Amigables (Slugs)**: Utilizar rutas descriptivas (ej. `/properties/casa-baleares-3-recamaras`) en lugar de IDs aleatorios.
 - **Sitemap Automático**: Generar un archivo `app/sitemap.ts` programático para asegurar que los motores de búsqueda indexen todo tu inventario.
 - **Rich Snippets (Schema.org)**: Incluir un objeto JSON-LD de tipo `RealEstateListing` u `Offer` en cada propiedad para que Google muestre precio, ubicación y estado directamente en la búsqueda.
 - **HTML Semántico y Accesibilidad**: Usa etiquetas como `<article>` y asegúrate de que los filtros sean navegables por teclado.

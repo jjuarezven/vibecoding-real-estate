@@ -21,7 +21,7 @@ export default function FeaturedCard({ property }: FeaturedCardProps) {
   };
 
   return (
-    <Link href={`/propiedades/${property.slug}`} className="block group">
+    <Link href={`/properties/${property.slug}`} className="block group">
       <div className="relative rounded-xl overflow-hidden shadow-soft bg-white">
         <div className="aspect-[4/3] w-full overflow-hidden relative">
           <img src={property.images[0].url} alt={property.images[0].alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
